@@ -1,0 +1,56 @@
+{
+    "sylphian_verify_account_already_linked.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "36b37d195444cd532b419f2523e6e471"
+    },
+    "sylphian_verify_add_minecraft_account.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "b9b0b81e8bf62bb7591c40dee2b9e0de"
+    },
+    "sylphian_verify_linked_accounts.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "06d7e3b06a54e241eba1c1650b6c0d85"
+    },
+    "sylphian_verify_minecraft_account_not_found.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "104a9e867f5f2c2afcc6088815bab76d"
+    },
+    "sylphian_verify_minecraft_accounts.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "ed2b05dd0a5b18681d3e68650d011ecc"
+    },
+    "sylphian_verify_mojang_api_error.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "a89e2aac117a193a33309d4cffabc755"
+    },
+    "sylphian_verify_no_linked_accounts.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "2928d62e64d64c9cc01db7e499e6c7bd"
+    },
+    "sylphian_verify_please_fill_all_fields.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "d5a03ec61f5c7abfbd1ab4bc06b3216a"
+    },
+    "sylphian_verify_too_many_accounts.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "705189bcb374b0d47879ac13eb42b021"
+    }
+}

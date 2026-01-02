@@ -1,0 +1,12 @@
+{
+    "public/sylphian_verify_account_minecraft.html": {
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "557f6aeeb5a1e100dc676de93a8e01bd"
+    },
+    "public/sylphian_verify_account_minecraft_delete.html": {
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "245278255a7ff4a20ebdfc8a3ef37eaf"
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "legacy_addon_id": "",
+    "title": "Sylphian - Account Verification",
+    "description": "An api for game servers to check against.",
+    "version_id": 1000010,
+    "version_string": "1.0.0 Alpha",
+    "dev": "QuackieMackie",
+    "dev_url": "https://github.com/QuackieMackie",
+    "faq_url": "",
+    "support_url": "https://github.com/Sylphian-Network/Sylphian-Verify/issues",
+    "extra_urls": [],
+    "require": {
+        "php": [
+            "8.3.0",
+            "PHP 8.3.0+"
+        ]
+    },
+    "icon": "fa-cube"
+}

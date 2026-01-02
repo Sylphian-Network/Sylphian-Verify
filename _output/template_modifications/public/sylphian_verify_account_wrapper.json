@@ -1,0 +1,9 @@
+{
+    "template": "account_wrapper",
+    "description": "Adds Linked Minecraft accounts to the account menu side bar.",
+    "execution_order": 10,
+    "enabled": true,
+    "action": "str_replace",
+    "find": "\t\t\t\t<!--[XF:settings_links:bottom]-->\n\t\t\t</div>\n\t\t</div>\n\t</div>",
+    "replace": "$0\n<div class=\"block\">\n\t<div class=\"block-container\">\n\t\t<div class=\"block-header\">{{ phrase('sylphian_verify_linked_accounts') }}</div>\n\t\t<div class=\"block-body\">\n\t\t\t<a class=\"blockLink {{ $pageSelected == 'minecraft' ? 'is-selected' : '' }}\" href=\"{{ link('account/minecraft') }}\">\n\t\t\t\t{{ phrase('sylphian_verify_minecraft_accounts') }}\n\t\t\t</a>\n\t\t</div>\n\t</div>\n</div>\n"
+}

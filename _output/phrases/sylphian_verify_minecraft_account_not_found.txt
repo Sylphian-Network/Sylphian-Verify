@@ -1,0 +1,1 @@
+Could not find a Minecraft account with the username '{username}'.

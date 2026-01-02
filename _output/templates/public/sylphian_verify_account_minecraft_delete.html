@@ -1,0 +1,18 @@
+<xf:title>Unlink Minecraft Account: {$account.username}</xf:title>
+
+<xf:form action="{{ link('account/minecraft-delete', null, {'account_id': $account.account_id}) }}" class="block" ajax="true">
+    <div class="block-container">
+        <div class="block-body">
+            <xf:formrow rowtype="confirm">
+                Are you sure you want to unlink the Minecraft account <strong>{$account.username}</strong>?
+                
+                <div class="u-inputSpacer u-muted">
+                    <xf:fa icon="fa-exclamation-triangle" />
+                    Unlinking this account will permanently remove it from the system. 
+                    This will prevent you from entering the game with this account if verification is required.
+                </div>
+            </xf:formrow>
+        </div>
+        <xf:submitrow rowtype="simple" icon="delete" submit="Unlink Account" />
+    </div>
+</xf:form>

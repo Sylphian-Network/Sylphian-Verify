@@ -1,0 +1,75 @@
+<xf:title>{{ phrase('sylphian_verify_linked_accounts') }}</xf:title>
+
+<xf:wrap template="account_wrapper" />
+
+<xf:css src="bb_code.less" />
+
+<xf:if is="$accounts.count() < 3">
+	<xf:form action="{{ link('account/minecraft') }}" ajax="true" class="block">
+		<div class="block-container">
+			<h2 class="block-header">{{ phrase('sylphian_verify_add_minecraft_account') }}</h2>
+			<div class="block-body">
+				<xf:textboxrow name="username" label="Minecraft Username" required="true" 
+							   explain="Enter your Minecraft username. Your UUID will be resolved automatically." />
+			</div>
+			<xf:submitrow icon="add" submit="Add Account" />
+		</div>
+	</xf:form>
+</xf:if>
+
+<div class="block">
+	<div class="block-container">
+        <h2 class="block-header">
+            {{ phrase('sylphian_verify_linked_accounts') }}
+            <span class="u-pullRight">
+                {$accounts.count()} / 3
+            </span>
+        </h2>
+		<div class="block-body">
+			<xf:if is="$accounts is not empty">
+				<xf:foreach loop="$accounts" value="$account">
+					<div class="block-row block-row--separated">
+						<div class="contentRow">
+							<span class="contentRow-figure minecraftAvatarWrap">
+								<img src="https://mc-heads.net/head/{$account.provider_key}/48" 
+									 alt="{$account.username}" 
+									 class="minecraftAvatar" />
+							</span>
+							
+							<div class="contentRow-main">
+								<div class="contentRow-extra">
+									<xf:button href="{{ link('account/minecraft-delete', null, {'account_id': $account.account_id}) }}" 
+											   class="button--warn button--small" 
+											   overlay="true" 
+											   icon="delete">
+										{{ phrase('unlink') }}
+									</xf:button>
+								</div>
+								
+								<h3 class="contentRow-header">{$account.username}</h3>
+								
+								<div class="contentRow-minor contentRow-minor--smaller">
+									<ul class="listInline listInline--bullet">
+										<li>
+											<span class="u-muted">
+												<xf:fa icon="fa-id-badge" title="UUID" />
+												<span class="bbCodeInlineSpoiler" data-xf-click="toggle-class" data-class="bbCodeInlineSpoiler" tabindex="0" role="button">
+													{$account.provider_key}
+												</span>
+											</span>
+										</li>
+										<li>
+											<xf:fa icon="fa-calendar-alt" title="{{ phrase('date') }}" /> <xf:date time="{$account.add_date}" />
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</xf:foreach>
+			<xf:else />
+				<div class="block-row">{{ phrase('sylphian_verify_no_linked_accounts') }}</div>
+			</xf:if>
+		</div>
+	</div>
+</div>

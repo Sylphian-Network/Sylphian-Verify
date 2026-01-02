@@ -1,0 +1,9 @@
+{
+    "template": "account_visitor_menu",
+    "description": "Adds Linked accounts to the visitor menu.",
+    "execution_order": 10,
+    "enabled": true,
+    "action": "str_replace",
+    "find": "\t\t<!--[XF:account_links:bottom]-->\n\t</ul>",
+    "replace": "$0\n<hr class=\"menu-separator\" />\n<ul class=\"listPlain listColumns listColumns--narrow listColumns--together\">\n\t<li><a href=\"{{ link('account/minecraft') }}\" class=\"menu-linkRow\">{{ phrase('sylphian_verify_minecraft_accounts') }}</a></li>\n</ul>"
+}
