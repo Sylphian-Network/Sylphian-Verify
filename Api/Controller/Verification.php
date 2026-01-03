@@ -16,7 +16,22 @@ class Verification extends AbstractController
 	public function actionGetMinecraft(): AbstractReply
 	{
 		$uuid = $this->filter('uuid', 'str');
+		if (!$uuid)
+		{
+			return $this->apiResult([
+				'allowed' => false,
+				'reason' => 'Please provide a UUID',
+			]);
+		}
+
 		$uuid = $this->normaliseMinecraftUuid($uuid);
+		if (!$uuid)
+		{
+			return $this->apiResult([
+				'allowed' => false,
+				'reason' => 'Invalid UUID format',
+			]);
+		}
 
 		/** @var Account $account */
 		$account = $this->finder('Sylphian\Verify:Account')
@@ -53,7 +68,7 @@ class Verification extends AbstractController
 	{
 		$uuid = str_replace('-', '', $uuid);
 
-		if (strlen($uuid) === 32)
+		if (strlen($uuid) === 32 && ctype_xdigit($uuid))
 		{
 			return substr($uuid, 0, 8) . '-' .
 				substr($uuid, 8, 4) . '-' .
@@ -62,6 +77,6 @@ class Verification extends AbstractController
 				substr($uuid, 20);
 		}
 
-		return $uuid;
+		return '';
 	}
 }
