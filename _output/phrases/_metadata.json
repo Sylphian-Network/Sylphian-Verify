@@ -1,4 +1,10 @@
 {
+    "api_scope.sylphian_verify_read.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "ccf1cf6e117f30abbfb0dde0365f1729"
+    },
     "sylphian_verify_account_already_linked.txt": {
         "global_cache": false,
         "version_id": 1000010,

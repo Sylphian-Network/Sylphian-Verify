@@ -4,10 +4,16 @@ namespace Sylphian\Verify\Api\Controller;
 
 use Sylphian\Verify\Entity\Account;
 use XF\Api\Controller\AbstractController;
+use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
 
 class Verification extends AbstractController
 {
+    protected function preDispatchController($action, ParameterBag $params): void
+    {
+        $this->assertApiScopeByRequestMethod('sylphian_verify');
+    }
+
 	public function allowUnauthenticatedRequest($action): bool
 	{
 		return false;

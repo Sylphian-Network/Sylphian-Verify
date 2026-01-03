@@ -1,0 +1,1 @@
+Covers checking if game accounts have been linked with a forum user.
