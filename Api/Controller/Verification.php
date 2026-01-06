@@ -2,6 +2,8 @@
 
 namespace Sylphian\Verify\Api\Controller;
 
+use Psr\Cache\InvalidArgumentException;
+use Sylphian\Library\Logger\Logger;
 use Sylphian\Verify\Entity\Account;
 use XF\Api\Controller\AbstractController;
 use XF\Mvc\ParameterBag;
@@ -9,16 +11,19 @@ use XF\Mvc\Reply\AbstractReply;
 
 class Verification extends AbstractController
 {
-    protected function preDispatchController($action, ParameterBag $params): void
-    {
-        $this->assertApiScopeByRequestMethod('sylphian_verify');
-    }
+	protected function preDispatchController($action, ParameterBag $params): void
+	{
+		$this->assertApiScopeByRequestMethod('sylphian_verify');
+	}
 
 	public function allowUnauthenticatedRequest($action): bool
 	{
 		return false;
 	}
 
+	/**
+	 * @throws InvalidArgumentException
+	 */
 	public function actionGetMinecraft(): AbstractReply
 	{
 		$uuid = $this->filter('uuid', 'str');
@@ -46,19 +51,62 @@ class Verification extends AbstractController
 			->with('User', true)
 			->fetchOne();
 
-		if ($account && $account->User)
+		if (!$account || !$account->User)
+		{
+			return $this->apiResult([
+				'allowed' => false,
+				'reason' => 'UUID not linked to any forum account',
+			]);
+		}
+
+		if ($account->confirmed)
 		{
 			return $this->apiResult([
 				'allowed' => true,
 				'forum_username' => $account->User->username,
 				'minecraft_username' => $account->username,
 				'link_date' => $account->add_date,
+				'confirmed_date' => $account->confirmed_date,
 			]);
+		}
+
+		$cache = $this->app()->cache('', true, false);
+		$cacheKey = "sylphian_verify_passcode_{$account->account_id}";
+		$item = $cache?->getItem($cacheKey);
+		$logger = Logger::withAddonId('Sylphian/Verify');
+
+		if ($item && $item->isHit())
+		{
+			$passcode = $item->get();
+			$logger->debug("Retrieved existing passcode {passcode} for account ID {account_id}", [
+				'passcode' => $passcode,
+				'account_id' => $account->account_id,
+			]);
+		}
+		else
+		{
+			$passcode = str_pad((string) mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
+
+			if ($cache && $item)
+			{
+				$item->set($passcode);
+				$item->expiresAfter(600);
+				$cache->save($item);
+
+				$logger->info("Generated new passcode {passcode} for account ID {account_id}", [
+					'passcode' => $passcode,
+					'account_id' => $account->account_id,
+				]);
+			}
 		}
 
 		return $this->apiResult([
 			'allowed' => false,
-			'reason' => 'UUID not linked to any forum account',
+			'reason' => 'Account not confirmed',
+			'passcode' => $passcode,
+			'forum_username' => $account->User->username,
+            'minecraft_username' => $account->username,
+            'link_date' => $account->add_date,
 		]);
 	}
 

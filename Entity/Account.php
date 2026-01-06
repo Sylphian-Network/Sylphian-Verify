@@ -13,6 +13,8 @@ use XF\Mvc\Entity\Structure;
  * @property string $provider_key
  * @property string $username
  * @property int $add_date
+ * @property bool $confirmed
+ * @property int $confirmed_date
  *
  * @property User $User
  */
@@ -30,6 +32,8 @@ class Account extends Entity
 			'provider_key' => ['type' => self::STR, 'maxLength' => 100, 'required' => true],
 			'username' => ['type' => self::STR, 'maxLength' => 100, 'required' => true],
 			'add_date' => ['type' => self::UINT, 'default' => \XF::$time],
+			'confirmed' => ['type' => self::BOOL, 'default' => false],
+			'confirmed_date' => ['type' => self::UINT, 'default' => 0],
 		];
 		$structure->getters = [];
 		$structure->relations = [

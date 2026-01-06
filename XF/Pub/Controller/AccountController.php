@@ -2,11 +2,14 @@
 
 namespace Sylphian\Verify\XF\Pub\Controller;
 
+use GuzzleHttp\Exception\GuzzleException;
+use Psr\Cache\InvalidArgumentException;
 use Sylphian\Verify\Entity\Account;
 use XF\Db\DuplicateKeyException;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
 use XF\Mvc\Reply\Error;
+use XF\Mvc\Reply\Exception;
 use XF\Mvc\Reply\Redirect;
 use XF\Mvc\Reply\View;
 use XF\PrintableException;
@@ -61,9 +64,14 @@ class AccountController extends XFCP_AccountController
 					substr($uuid, 16, 4) . '-' .
 					substr($uuid, 20);
 			}
-			catch (\Exception $e)
+			catch (GuzzleException $e)
 			{
 				return $this->error(\XF::phrase('sylphian_verify_mojang_api_error'));
+			}
+			catch (\Exception $e)
+			{
+				\XF::logException($e);
+				return $this->error($e->getMessage());
 			}
 
 			$existing = $this->finder('Sylphian\Verify:Account')
@@ -91,7 +99,7 @@ class AccountController extends XFCP_AccountController
 			{
 				return $this->error(\XF::phrase('sylphian_verify_account_already_linked'));
 			}
-			catch (PrintableException $e)
+			catch (PrintableException|\Exception $e)
 			{
 				return $this->error($e->getMessage());
 			}
@@ -112,6 +120,10 @@ class AccountController extends XFCP_AccountController
 		return $this->addAccountWrapperParams($view, 'minecraft');
 	}
 
+	/**
+	 * @throws Exception
+	 * @throws PrintableException
+	 */
 	public function actionMinecraftDelete(ParameterBag $params): Redirect|View|AbstractReply
 	{
 		$visitor = \XF::visitor();
@@ -136,6 +148,48 @@ class AccountController extends XFCP_AccountController
 		return $this->view('Sylphian\Verify:Account\MinecraftDelete', 'sylphian_verify_account_minecraft_delete', $viewParams);
 	}
 
+	/**
+	 * @throws Exception
+	 * @throws InvalidArgumentException
+	 * @throws PrintableException
+	 */
+	public function actionMinecraftVerify(): AbstractReply
+	{
+		$this->assertPostOnly();
+
+		$accountId = $this->filter('account_id', 'uint');
+		$account = $this->assertMinecraftAccountExists($accountId);
+
+		if ($account->user_id != \XF::visitor()->user_id)
+		{
+			return $this->noPermission();
+		}
+
+		$userInput = $this->filter('passcode', 'str');
+
+		$cache = $this->app()->cache('', true, false);
+		$cacheKey = "sylphian_verify_passcode_{$account->account_id}";
+
+		$item = $cache?->getItem($cacheKey);
+		$storedPasscode = ($item && $item->isHit()) ? $item->get() : null;
+
+		if ($storedPasscode && $userInput === $storedPasscode)
+		{
+			$account->confirmed = true;
+			$account->confirmed_date = \XF::$time;
+			$account->save();
+
+			$cache?->deleteItem($cacheKey);
+
+			return $this->redirect($this->buildLink('account/minecraft'), \XF::phrase('sylphian_verify_account_confirmed_successfully'));
+		}
+
+		return $this->error(\XF::phrase('sylphian_verify_invalid_passcode_or_expired'));
+	}
+
+	/**
+	 * @throws Exception
+	 */
 	protected function assertMinecraftAccountExists($id, $with = null, $phraseKey = null): Account
 	{
 		/** @var Account $account */

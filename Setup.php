@@ -24,6 +24,8 @@ class Setup extends AbstractSetup
 			$table->addColumn('provider_key', 'varchar', 100);
 			$table->addColumn('username', 'varchar', 100);
 			$table->addColumn('add_date', 'int')->unsigned();
+			$table->addColumn('confirmed', 'tinyint')->setDefault(0);
+			$table->addColumn('confirmed_date', 'int')->unsigned()->setDefault(0);
 
 			$table->addPrimaryKey('account_id');
 			$table->addKey(['user_id', 'provider']);

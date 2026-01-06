@@ -10,6 +10,10 @@
     "support_url": "https://github.com/Sylphian-Network/Sylphian-Verify/issues",
     "extra_urls": [],
     "require": {
+        "Sylphian/Library": [
+            1000670,
+            "Sylphian - Library [1.0.6] by QuackieMackie"
+        ],
         "php": [
             "8.3.0",
             "PHP 8.3.0+"
