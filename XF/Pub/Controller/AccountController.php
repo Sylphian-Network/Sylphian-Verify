@@ -4,6 +4,7 @@ namespace Sylphian\Verify\XF\Pub\Controller;
 
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Cache\InvalidArgumentException;
+use Sylphian\Library\Logger\Logger;
 use Sylphian\Verify\Entity\Account;
 use XF\Db\DuplicateKeyException;
 use XF\Mvc\ParameterBag;
@@ -52,6 +53,11 @@ class AccountController extends XFCP_AccountController
 
 				if ($response->getStatusCode() == 204 || $response->getStatusCode() == 404 || !$data || !isset($data['id']))
 				{
+					Logger::withAddonId('Sylphian/Verify')->warning("Account link attempt failed: Minecraft account not found", [
+						'user_id' => $visitor->user_id,
+						'username' => $visitor->username,
+						'attempted_minecraft_username' => $username,
+					]);
 					return $this->error(\XF::phrase('sylphian_verify_minecraft_account_not_found', ['username' => $username]));
 				}
 
@@ -66,6 +72,12 @@ class AccountController extends XFCP_AccountController
 			}
 			catch (GuzzleException $e)
 			{
+				Logger::withAddonId('Sylphian/Verify')->error("Mojang API error during link attempt", [
+					'user_id' => $visitor->user_id,
+					'username' => $visitor->username,
+					'attempted_minecraft_username' => $username,
+					'exception' => $e,
+				]);
 				return $this->error(\XF::phrase('sylphian_verify_mojang_api_error'));
 			}
 			catch (\Exception $e)
@@ -183,6 +195,13 @@ class AccountController extends XFCP_AccountController
 
 			return $this->redirect($this->buildLink('account/minecraft'), \XF::phrase('sylphian_verify_account_confirmed_successfully'));
 		}
+
+		Logger::withAddonId('Sylphian/Verify')->warning("Account confirmation failed: Invalid passcode", [
+			'account_id' => $account->account_id,
+			'user_id' => $account->user_id,
+			'minecraft_username' => $account->username,
+			'entered_passcode' => $userInput,
+		]);
 
 		return $this->error(\XF::phrase('sylphian_verify_invalid_passcode_or_expired'));
 	}
