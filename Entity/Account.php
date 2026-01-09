@@ -2,6 +2,7 @@
 
 namespace Sylphian\Verify\Entity;
 
+use Sylphian\Library\Logger\Logger;
 use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
@@ -20,6 +21,48 @@ use XF\Mvc\Entity\Structure;
  */
 class Account extends Entity
 {
+	protected function _postSave(): void
+	{
+		$logger = Logger::withAddonId('Sylphian/Verify');
+		$request = \XF::app()->request();
+
+		$context = [
+			'account_id' => $this->account_id,
+			'user_id' => $this->user_id,
+			'username' => $this->username,
+			'provider' => $this->provider,
+			'provider_key' => $this->provider_key,
+			'ip' => $request->getIp(),
+			'user_agent' => $request->getUserAgent(),
+		];
+
+		if ($this->isInsert())
+		{
+			$logger->info("Account link created: {username} ({provider}:{provider_key})", $context);
+		}
+
+		if ($this->isUpdate() && $this->isChanged('confirmed') && $this->confirmed)
+		{
+			$logger->info("Account link confirmed: {username} ({provider}:{provider_key})", $context);
+		}
+	}
+
+	protected function _postDelete(): void
+	{
+		$logger = Logger::withAddonId('Sylphian/Verify');
+		$request = \XF::app()->request();
+
+		$logger->info("Account link removed: {username} ({provider}:{provider_key})", [
+			'account_id' => $this->account_id,
+			'user_id' => $this->user_id,
+			'username' => $this->username,
+			'provider' => $this->provider,
+			'provider_key' => $this->provider_key,
+			'ip' => $request->getIp(),
+			'user_agent' => $request->getUserAgent(),
+		]);
+	}
+
 	public static function getStructure(Structure $structure): Structure
 	{
 		$structure->table = 'xf_sylphian_verify_account';
