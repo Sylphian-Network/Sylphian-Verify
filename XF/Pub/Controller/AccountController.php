@@ -4,6 +4,7 @@ namespace Sylphian\Verify\XF\Pub\Controller;
 
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Cache\InvalidArgumentException;
+use Sylphian\Library\Logger\AddonLogger;
 use Sylphian\Library\Logger\Logger;
 use Sylphian\Verify\Entity\Account;
 use XF\Db\DuplicateKeyException;
@@ -17,6 +18,14 @@ use XF\PrintableException;
 
 class AccountController extends XFCP_AccountController
 {
+	protected AddonLogger $logger;
+
+	protected function preDispatchController($action, ParameterBag $params): void
+	{
+		parent::preDispatchController($action, $params);
+		$this->logger = Logger::withAddonId('Sylphian/Verify');
+	}
+
 	public function actionMinecraft(): Redirect|View|Error
 	{
 		$visitor = \XF::visitor();
@@ -53,7 +62,7 @@ class AccountController extends XFCP_AccountController
 
 				if ($response->getStatusCode() == 204 || $response->getStatusCode() == 404 || !$data || !isset($data['id']))
 				{
-					Logger::withAddonId('Sylphian/Verify')->warning("Account link attempt failed: Minecraft account not found", [
+					$this->logger->warning("Account link attempt failed: Minecraft account not found", [
 						'user_id' => $visitor->user_id,
 						'username' => $visitor->username,
 						'attempted_minecraft_username' => $username,
@@ -72,7 +81,7 @@ class AccountController extends XFCP_AccountController
 			}
 			catch (GuzzleException $e)
 			{
-				Logger::withAddonId('Sylphian/Verify')->error("Mojang API error during link attempt", [
+				$this->logger->error("Mojang API error during link attempt", [
 					'user_id' => $visitor->user_id,
 					'username' => $visitor->username,
 					'attempted_minecraft_username' => $username,
@@ -195,13 +204,6 @@ class AccountController extends XFCP_AccountController
 
 			return $this->redirect($this->buildLink('account/minecraft'), \XF::phrase('sylphian_verify_account_confirmed_successfully'));
 		}
-
-		Logger::withAddonId('Sylphian/Verify')->warning("Account confirmation failed: Invalid passcode", [
-			'account_id' => $account->account_id,
-			'user_id' => $account->user_id,
-			'minecraft_username' => $account->username,
-			'entered_passcode' => $userInput,
-		]);
 
 		return $this->error(\XF::phrase('sylphian_verify_invalid_passcode_or_expired'));
 	}
