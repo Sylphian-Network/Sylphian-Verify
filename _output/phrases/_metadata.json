@@ -59,6 +59,12 @@
         "version_string": "1.0.0 Alpha",
         "hash": "205bc73c4ab4286a1fb9d4c18322777c"
     },
+    "sylphian_verify_invalid_passcode_or_expired.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "310c85970da6ecbf3a3b13ceef71bd34"
+    },
     "sylphian_verify_linked_accounts.txt": {
         "global_cache": false,
         "version_id": 1000010,
