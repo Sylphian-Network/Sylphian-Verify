@@ -186,6 +186,18 @@ class AccountController extends XFCP_AccountController
 			return $this->noPermission();
 		}
 
+		$cache = $this->app()->cache('', true, false);
+		$failedKey = "sylphian_verify_failed_attempts_{$account->account_id}";
+
+		if ($cache)
+		{
+			$attempts = (int) $cache->fetch($failedKey);
+			if ($attempts >= 5)
+			{
+				return $this->error(\XF::phrase('sylphian_verify_too_many_failed_attempts'));
+			}
+		}
+
 		$userInput = $this->filter('passcode', 'str');
 
 		$cache = $this->app()->cache('', true, false);
@@ -201,8 +213,26 @@ class AccountController extends XFCP_AccountController
 			$account->save();
 
 			$cache?->deleteItem($cacheKey);
+			$cache?->delete($failedKey);
 
 			return $this->redirect($this->buildLink('account/minecraft'), \XF::phrase('sylphian_verify_account_confirmed_successfully'));
+		}
+		else
+		{
+			if ($cache)
+			{
+				$attempts = (int) $cache->fetch($failedKey) + 1;
+
+				$item = $cache->getItem($failedKey);
+				$item->set($attempts);
+				$item->expiresAfter(3600); // 1 hour
+				$cache->save($item);
+			}
+
+			$this->logger->warning("Invalid passcode entered", [
+				'account_id' => $account->account_id,
+				'attempts' => $attempts ?? 1,
+			]);
 		}
 
 		return $this->error(\XF::phrase('sylphian_verify_invalid_passcode_or_expired'));

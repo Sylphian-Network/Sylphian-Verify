@@ -89,6 +89,12 @@
         "version_string": "1.0.0 Alpha",
         "hash": "705189bcb374b0d47879ac13eb42b021"
     },
+    "sylphian_verify_too_many_failed_attempts.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "436a1cf811d227b15eea653507b40245"
+    },
     "sylphian_verify_unconfirmed.txt": {
         "global_cache": false,
         "version_id": 1000010,
