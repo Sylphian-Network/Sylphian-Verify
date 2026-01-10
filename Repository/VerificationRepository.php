@@ -7,21 +7,21 @@ use XF\Mvc\Entity\Repository;
 
 class VerificationRepository extends Repository
 {
-    /**
-     * @param string $uuid
-     * @return Account|null
-     */
-    public function getAccountByMinecraftUuid(string $uuid): ?Account
-    {
-        /** @var Account|null $account */
-        $account = $this->finder('Sylphian\Verify:Account')
-            ->where('provider', 'minecraft')
-            ->where('provider_key', $uuid)
-            ->with('User', true)
-            ->fetchOne();
+	/**
+	 * @param string $uuid
+	 * @return Account|null
+	 */
+	public function getAccountByMinecraftUuid(string $uuid): ?Account
+	{
+		/** @var Account|null $account */
+		$account = $this->finder('Sylphian\Verify:Account')
+			->where('provider', 'minecraft')
+			->where('provider_key', $uuid)
+			->with('User', true)
+			->fetchOne();
 
-        return $account;
-    }
+		return $account;
+	}
 
 	/**
 	 * @param string $uuid

@@ -100,7 +100,7 @@
 }
 </xf:css>
 
-<xf:if is="$accounts.count() < 3">
+<xf:if is="$accounts.count() < $xf.options.sylphian_verify_minecraft_account_limit">
 	<xf:form action="{{ link('account/minecraft') }}" ajax="true" class="block">
 		<div class="block-container">
 			<h2 class="block-header">{{ phrase('sylphian_verify_add_minecraft_account') }}</h2>
@@ -118,7 +118,7 @@
 		<h2 class="block-header">
 			{{ phrase('sylphian_verify_linked_accounts') }}
 			<span class="u-pullRight">
-				{$accounts.count()} / 3
+				{$accounts.count()} / {$xf.options.sylphian_verify_minecraft_account_limit}
 			</span>
 		</h2>
 		<div class="block-body">

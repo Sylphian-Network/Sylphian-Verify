@@ -5,6 +5,30 @@
         "version_string": "1.0.0 Alpha",
         "hash": "ccf1cf6e117f30abbfb0dde0365f1729"
     },
+    "option.sylphian_verify_minecraft_account_limit.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "cc54fc36a0b5ed8a69d3887f03827655"
+    },
+    "option_explain.sylphian_verify_minecraft_account_limit.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "67c36e47330b3b9b779871645bfe5195"
+    },
+    "option_group.sylphian_verify.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "e6a459eb60e359d6fd9cb63722755b89"
+    },
+    "option_group_description.sylphian_verify.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "d41d8cd98f00b204e9800998ecf8427e"
+    },
     "sylphian_verify_6_digit_code.txt": {
         "global_cache": false,
         "version_id": 1000010,

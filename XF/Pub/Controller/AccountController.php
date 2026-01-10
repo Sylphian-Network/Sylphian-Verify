@@ -38,13 +38,13 @@ class AccountController extends XFCP_AccountController
 
 		if ($this->isPost())
 		{
-			if ($accounts->count() >= 3)
+			$limit = $this->options()->sylphian_verify_minecraft_account_limit;
+			if ($accounts->count() >= $limit)
 			{
 				return $this->error(\XF::phrase('sylphian_verify_too_many_accounts'));
 			}
 
 			$username = $this->filter('username', 'str');
-
 			if (!$username)
 			{
 				return $this->error(\XF::phrase('sylphian_verify_please_fill_all_fields'));
@@ -64,7 +64,6 @@ class AccountController extends XFCP_AccountController
 				{
 					$this->logger->warning("Account link attempt failed: Minecraft account not found", [
 						'user_id' => $visitor->user_id,
-						'username' => $visitor->username,
 						'attempted_minecraft_username' => $username,
 					]);
 					return $this->error(\XF::phrase('sylphian_verify_minecraft_account_not_found', ['username' => $username]));
@@ -83,14 +82,16 @@ class AccountController extends XFCP_AccountController
 			{
 				$this->logger->error("Mojang API error during link attempt", [
 					'user_id' => $visitor->user_id,
-					'username' => $visitor->username,
-					'attempted_minecraft_username' => $username,
-					'exception' => $e,
+					'exception' => $e->getMessage(),
 				]);
 				return $this->error(\XF::phrase('sylphian_verify_mojang_api_error'));
 			}
 			catch (\Exception $e)
 			{
+				$this->logger->error("Unexpected error during Minecraft verification: " . $e->getMessage(), [
+					'user_id' => $visitor->user_id,
+					'exception' => $e,
+				]);
 				\XF::logException($e);
 				return $this->error($e->getMessage());
 			}
