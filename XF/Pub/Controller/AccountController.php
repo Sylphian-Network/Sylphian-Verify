@@ -194,7 +194,9 @@ class AccountController extends XFCP_AccountController
 
 		if ($cache)
 		{
-			$attempts = (int) $cache->fetch($failedKey);
+			$item = $cache->getItem($failedKey);
+			$attempts = $item->isHit() ? (int) $item->get() : 0;
+
 			if ($attempts >= 5)
 			{
 				return $this->error(\XF::phrase('sylphian_verify_too_many_failed_attempts'));
@@ -224,9 +226,9 @@ class AccountController extends XFCP_AccountController
 		{
 			if ($cache)
 			{
-				$attempts = (int) $cache->fetch($failedKey) + 1;
-
 				$item = $cache->getItem($failedKey);
+				$attempts = ($item->isHit() ? (int) $item->get() : 0) + 1;
+
 				$item->set($attempts);
 				$item->expiresAfter(3600); // 1 hour
 				$cache->save($item);
