@@ -30,6 +30,8 @@ class AccountController extends XFCP_AccountController
 	{
 		$visitor = \XF::visitor();
 
+		$limit = $this->options()->sylphian_verify_minecraft_account_limit;
+
 		$accounts = $this->finder('Sylphian\Verify:Account')
 			->where('user_id', $visitor->user_id)
 			->where('provider', 'minecraft')
@@ -38,7 +40,6 @@ class AccountController extends XFCP_AccountController
 
 		if ($this->isPost())
 		{
-			$limit = $this->options()->sylphian_verify_minecraft_account_limit;
 			if ($accounts->count() >= $limit)
 			{
 				return $this->error(\XF::phrase('sylphian_verify_too_many_accounts'));
@@ -131,6 +132,7 @@ class AccountController extends XFCP_AccountController
 
 		$viewParams = [
 			'accounts' => $accounts,
+			'account_limit' => $limit,
 		];
 
 		$view = $this->view(
