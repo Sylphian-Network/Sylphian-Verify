@@ -63,14 +63,32 @@ class Verification extends AbstractController
 			], 'User retrieved successfully');
 		}
 
-		$passcode = $repo->getPasscode($account);
+		$bruteForce = $repo->getBruteForceDetails($account);
+		if ($bruteForce['is_blocked'])
+		{
+			$this->logger->warning("API Request: Brute force blocked ({uuid})", ['uuid' => $uuid]);
+
+			return $envelopeRepo->apiEnvelopeSuccess([
+				'allowed' => false,
+				'reason' => 'brute_force_blocked',
+				'block_expires' => $bruteForce['block_expires'],
+				'remaining_seconds' => $bruteForce['remaining_seconds'],
+				'forum_username' => $account->User->username,
+				'minecraft_username' => $account->username,
+			], 'Too many failed attempts. Please try again later.');
+		}
+
+		$passcodeDetails = $repo->getPasscodeDetails($account);
 
 		$this->logger->info("API Request: Unconfirmed account found ({uuid})", ['uuid' => $uuid]);
 
 		return $envelopeRepo->apiEnvelopeSuccess([
 			'allowed' => false,
 			'reason' => 'Account not confirmed',
-			'passcode' => $passcode,
+			'passcode' => $passcodeDetails['passcode'],
+			'passcode_expires' => $passcodeDetails['expires'],
+			'passcode_remaining_seconds' => $passcodeDetails['remaining_seconds'],
+			'attempts_remaining' => $bruteForce['attempts_remaining'],
 			'forum_username' => $account->User->username,
 			'minecraft_username' => $account->username,
 		], 'Account found but confirmation required');

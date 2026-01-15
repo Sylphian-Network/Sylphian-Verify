@@ -7,6 +7,7 @@ use Psr\Cache\InvalidArgumentException;
 use Sylphian\Library\Logger\AddonLogger;
 use Sylphian\Library\Logger\Logger;
 use Sylphian\Verify\Entity\Account;
+use Sylphian\Verify\Repository\VerificationRepository;
 use XF\Db\DuplicateKeyException;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
@@ -189,58 +190,53 @@ class AccountController extends XFCP_AccountController
 			return $this->noPermission();
 		}
 
-		$cache = $this->app()->cache('', true, false);
-		$failedKey = "sylphian_verify_failed_attempts_{$account->account_id}";
+		$repo = $this->getVerificationRepo();
+		$bruteForce = $repo->getBruteForceDetails($account);
 
-		if ($cache)
+		if ($bruteForce['is_blocked'])
 		{
-			$item = $cache->getItem($failedKey);
-			$attempts = $item->isHit() ? (int) $item->get() : 0;
-
-			if ($attempts >= 5)
-			{
-				return $this->error(\XF::phrase('sylphian_verify_too_many_failed_attempts'));
-			}
+			return $this->error(\XF::phrase('sylphian_verify_too_many_failed_attempts'));
 		}
 
 		$userInput = $this->filter('passcode', 'str');
+		$passcodeDetails = $repo->getPasscodeDetails($account);
 
-		$cache = $this->app()->cache('', true, false);
-		$cacheKey = "sylphian_verify_passcode_{$account->account_id}";
-
-		$item = $cache?->getItem($cacheKey);
-		$storedPasscode = ($item && $item->isHit()) ? $item->get() : null;
-
-		if ($storedPasscode && $userInput === $storedPasscode)
+		if ($userInput === $passcodeDetails['passcode'])
 		{
 			$account->confirmed = true;
 			$account->confirmed_date = \XF::$time;
 			$account->save();
 
-			$cache?->deleteItem($cacheKey);
-			$cache?->delete($failedKey);
+			$cache = $this->app()->cache('', true, false);
+			if ($cache)
+			{
+				$cache->deleteItem("sylphian_verify_passcode_{$account->account_id}");
+			}
+			$repo->resetFailedAttempts($account);
 
 			return $this->redirect($this->buildLink('account/minecraft'), \XF::phrase('sylphian_verify_account_confirmed_successfully'));
 		}
 		else
 		{
-			if ($cache)
-			{
-				$item = $cache->getItem($failedKey);
-				$attempts = ($item->isHit() ? (int) $item->get() : 0) + 1;
-
-				$item->set($attempts);
-				$item->expiresAfter(3600); // 1 hour
-				$cache->save($item);
-			}
+			$repo->increaseFailedAttempts($account);
+			$bruteForce = $repo->getBruteForceDetails($account);
 
 			$this->logger->warning("Invalid passcode entered", [
 				'account_id' => $account->account_id,
-				'attempts' => $attempts ?? 1,
+				'attempts' => $bruteForce['attempts'],
 			]);
 		}
 
 		return $this->error(\XF::phrase('sylphian_verify_invalid_passcode_or_expired'));
+	}
+
+	/**
+	 * @return VerificationRepository
+	 */
+	protected function getVerificationRepo(): VerificationRepository
+	{
+		/** @noinspection PhpIncompatibleReturnTypeInspection */
+		return $this->repository('Sylphian\Verify:Verification');
 	}
 
 	/**
