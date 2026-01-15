@@ -1,0 +1,1 @@
+The duration (in seconds) that a user will be blocked after exceeding the failed passcode attempts limit.

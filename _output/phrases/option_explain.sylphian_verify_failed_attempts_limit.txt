@@ -1,0 +1,1 @@
+The number of incorrect passcode attempts allowed before a temporary block is applied.

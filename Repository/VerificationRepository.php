@@ -71,7 +71,8 @@ class VerificationRepository extends Repository
 		else
 		{
 			$passcode = str_pad((string) mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
-			$expiry = \XF::$time + 600;
+			$expiryTime = $this->options()->sylphian_verify_passcode_expiry ?: 600;
+			$expiry = \XF::$time + $expiryTime;
 			if ($cache && $item)
 			{
 				$item->set([
@@ -105,12 +106,14 @@ class VerificationRepository extends Repository
 		$failedKey = "sylphian_verify_failed_attempts_{$account->account_id}";
 		$item = $cache->getItem($failedKey);
 
+		$limit = $this->options()->sylphian_verify_failed_attempts_limit ?: 5;
+
 		if (!$item->isHit())
 		{
 			return [
 				'is_blocked' => false,
 				'attempts' => 0,
-				'attempts_remaining' => 5,
+				'attempts_remaining' => $limit,
 				'block_expires' => 0,
 				'remaining_seconds' => 0,
 			];
@@ -121,9 +124,9 @@ class VerificationRepository extends Repository
 		$expiry = $data['expiry'] ?? 0;
 
 		return [
-			'is_blocked' => ($attempts >= 5),
+			'is_blocked' => ($attempts >= $limit),
 			'attempts' => $attempts,
-			'attempts_remaining' => max(0, 5 - $attempts),
+			'attempts_remaining' => max(0, $limit - $attempts),
 			'block_expires' => $expiry,
 			'remaining_seconds' => $expiry ? max(0, $expiry - \XF::$time) : 0,
 		];
@@ -146,7 +149,8 @@ class VerificationRepository extends Repository
 
 		$data = $item->isHit() ? $item->get() : null;
 		$attempts = ($data['attempts'] ?? 0) + 1;
-		$expiry = ($data['expiry'] ?? 0) ?: (\XF::$time + 3600);
+		$blockDuration = $this->options()->sylphian_verify_block_expiry ?: 3600;
+		$expiry = ($data['expiry'] ?? 0) ?: (\XF::$time + $blockDuration);
 
 		$item->set([
 			'attempts' => $attempts,
@@ -163,9 +167,6 @@ class VerificationRepository extends Repository
 	public function resetFailedAttempts(Account $account): void
 	{
 		$cache = $this->app()->cache('', true, false);
-		if ($cache)
-		{
-			$cache->deleteItem("sylphian_verify_failed_attempts_{$account->account_id}");
-		}
+		$cache?->deleteItem("sylphian_verify_failed_attempts_{$account->account_id}");
 	}
 }

@@ -1,5 +1,14 @@
 {
+    "sylphian_verify_block_expiry.json": {
+        "hash": "a688e4b50e43ee39a4905da34dd0ac97"
+    },
+    "sylphian_verify_failed_attempts_limit.json": {
+        "hash": "2a6039545338bfc22270988bda02dea2"
+    },
     "sylphian_verify_minecraft_account_limit.json": {
-        "hash": "424a044042de0958028c12df9f08d667"
+        "hash": "3cb7a2f9c63602faad1ea7d7b5613baf"
+    },
+    "sylphian_verify_passcode_expiry.json": {
+        "hash": "46f792ba4a8368793cc90451cc624866"
     }
 }

@@ -5,17 +5,53 @@
         "version_string": "1.0.0 Alpha",
         "hash": "ccf1cf6e117f30abbfb0dde0365f1729"
     },
+    "option.sylphian_verify_block_expiry.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "185dda2072e51cc93f3bcafe6800937a"
+    },
+    "option.sylphian_verify_failed_attempts_limit.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "42a08b0c108dc57d4e078c04767a833a"
+    },
     "option.sylphian_verify_minecraft_account_limit.txt": {
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "cc54fc36a0b5ed8a69d3887f03827655"
     },
+    "option.sylphian_verify_passcode_expiry.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "7eb595c73eb2c886fab938425b81ccfd"
+    },
+    "option_explain.sylphian_verify_block_expiry.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "6775da5dbeb06bc672929623b525dc34"
+    },
+    "option_explain.sylphian_verify_failed_attempts_limit.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "995745024a67ff865e77719ba58b357d"
+    },
     "option_explain.sylphian_verify_minecraft_account_limit.txt": {
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "67c36e47330b3b9b779871645bfe5195"
+    },
+    "option_explain.sylphian_verify_passcode_expiry.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "2cb9c82138051470a82181c0b3c06d01"
     },
     "option_group.sylphian_verify.txt": {
         "global_cache": false,
@@ -64,6 +100,12 @@
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "310c85970da6ecbf3a3b13ceef71bd34"
+    },
+    "sylphian_verify_linked_account_options.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "faa3adb87b9bb3c0556f137a99bfb7e9"
     },
     "sylphian_verify_linked_accounts.txt": {
         "global_cache": false,
@@ -130,6 +172,12 @@
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "2c879b17c7c0fdedd594bf24948f3574"
+    },
+    "sylphian_verify_universal_options.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "cca110c5a9b8540faa673e137a651ada"
     },
     "sylphian_verify_verification_explain.txt": {
         "global_cache": false,

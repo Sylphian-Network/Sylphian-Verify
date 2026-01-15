@@ -1,4 +1,9 @@
 {
+    "admin/sylphian_verify_option_macros.html": {
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "314049060812b5f8b08c430b95f6afed"
+    },
     "public/sylphian_verify_account_minecraft.html": {
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",

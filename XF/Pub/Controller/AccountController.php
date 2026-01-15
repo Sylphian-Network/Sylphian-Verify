@@ -208,10 +208,7 @@ class AccountController extends XFCP_AccountController
 			$account->save();
 
 			$cache = $this->app()->cache('', true, false);
-			if ($cache)
-			{
-				$cache->deleteItem("sylphian_verify_passcode_{$account->account_id}");
-			}
+			$cache?->deleteItem("sylphian_verify_passcode_{$account->account_id}");
 			$repo->resetFailedAttempts($account);
 
 			return $this->redirect($this->buildLink('account/minecraft'), \XF::phrase('sylphian_verify_account_confirmed_successfully'));
