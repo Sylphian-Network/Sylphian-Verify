@@ -16,6 +16,7 @@ use XF\Mvc\Reply\Exception;
 use XF\Mvc\Reply\Redirect;
 use XF\Mvc\Reply\View;
 use XF\PrintableException;
+use XF\Util\Json;
 
 class AccountController extends XFCP_AccountController
 {
@@ -60,7 +61,7 @@ class AccountController extends XFCP_AccountController
 					'http_errors' => false,
 				]);
 				$contents = $response->getBody()->getContents();
-				$data = json_decode($contents, true);
+				$data = Json::decodeJsonOrSerialized($contents);
 
 				if ($response->getStatusCode() == 204 || $response->getStatusCode() == 404 || !$data || !isset($data['id']))
 				{
