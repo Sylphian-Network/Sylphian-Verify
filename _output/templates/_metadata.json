@@ -13,5 +13,10 @@
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "245278255a7ff4a20ebdfc8a3ef37eaf"
+    },
+    "public/sylphian_verify_game_servers.html": {
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "41f107ca00de8f2d577ee7edb998232e"
     }
 }
