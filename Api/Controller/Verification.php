@@ -99,8 +99,7 @@ class Verification extends AbstractController
 	 */
 	protected function getVerificationRepo(): VerificationRepository
 	{
-		/** @noinspection PhpIncompatibleReturnTypeInspection */
-		return $this->repository('Sylphian\Verify:Verification');
+		return $this->repository(VerificationRepository::class);
 	}
 
 	/**
@@ -108,7 +107,6 @@ class Verification extends AbstractController
 	 */
 	protected function getEnvelopeRepo(): EnvelopeRepository
 	{
-		/** @noinspection PhpIncompatibleReturnTypeInspection */
-		return $this->repository('Sylphian\Verify:Envelope');
+		return $this->repository(EnvelopeRepository::class);
 	}
 }
