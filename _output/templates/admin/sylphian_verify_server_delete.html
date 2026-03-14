@@ -1,0 +1,13 @@
+<xf:title>{{ phrase('confirm_action') }}</xf:title>
+
+<xf:form action="{{ link('sylphian-verify-manage-servers/delete', $server) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('sylphian_verify_confirm_delete_server') }}
+				<strong><a href="{{ link('sylphian-verify-manage-servers/edit', $server) }}">{$server.title}</a></strong>
+			</xf:inforow>
+		</div>
+		<xf:submitrow rowtype="simple" icon="delete" />
+	</div>
+</xf:form>

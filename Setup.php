@@ -33,8 +33,27 @@ class Setup extends AbstractSetup
 		});
 	}
 
+	public function installStep2(): void
+	{
+		$this->schemaManager()->createTable('xf_sylphian_verify_server', function (Create $table)
+		{
+			$table->addColumn('server_id', 'int')->autoIncrement();
+			$table->addColumn('title', 'varchar', 100);
+			$table->addColumn('game', 'varchar', 50);
+			$table->addColumn('host', 'varchar', 100);
+			$table->addColumn('port', 'int')->unsigned()->setDefault(25565);
+
+			$table->addPrimaryKey('server_id');
+		});
+	}
+
 	public function uninstallStep1(): void
 	{
 		$this->schemaManager()->dropTable('xf_sylphian_verify_account');
+	}
+
+	public function uninstallStep2(): void
+	{
+		$this->schemaManager()->dropTable('xf_sylphian_verify_server');
 	}
 }

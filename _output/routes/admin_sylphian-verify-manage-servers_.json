@@ -1,0 +1,11 @@
+{
+    "route_type": "admin",
+    "route_prefix": "sylphian-verify-manage-servers",
+    "sub_name": "",
+    "format": ":int<server_id>/",
+    "build_class": "",
+    "build_method": "",
+    "controller": "Sylphian\\Verify:ServerManagement",
+    "context": "",
+    "action_prefix": ""
+}
