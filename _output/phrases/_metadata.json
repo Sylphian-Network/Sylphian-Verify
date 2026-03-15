@@ -167,6 +167,12 @@
         "version_string": "1.0.0 Alpha",
         "hash": "06d7e3b06a54e241eba1c1650b6c0d85"
     },
+    "sylphian_verify_loading_status.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "8524de963f07201e5c086830d370797f"
+    },
     "sylphian_verify_minecraft_account_not_found.txt": {
         "global_cache": false,
         "version_id": 1000010,

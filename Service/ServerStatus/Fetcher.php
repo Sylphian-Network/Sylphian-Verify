@@ -3,10 +3,15 @@
 namespace Sylphian\Verify\Service\ServerStatus;
 
 use Sylphian\Verify\Entity\GameServer;
+use Sylphian\Verify\Enum\GameType;
+use Sylphian\Verify\ServerStatus\AbstractProvider;
+use Sylphian\Verify\ServerStatus\Minecraft;
 use XF\Service\AbstractService;
 
 class Fetcher extends AbstractService
 {
+	protected const int CACHE_TTL = 300;
+
 	public function getStatus(GameServer $server)
 	{
 		$cache = $this->app->cache('', true, false);
@@ -27,7 +32,7 @@ class Fetcher extends AbstractService
 		$status = $this->performLiveQuery($server);
 
 		$item->set($status);
-		$item->expiresAfter(300);
+		$item->expiresAfter(self::CACHE_TTL);
 		$cache->save($item);
 
 		return $status;
@@ -35,14 +40,29 @@ class Fetcher extends AbstractService
 
 	protected function performLiveQuery(GameServer $server): array
 	{
-		return [
-			'online' => true,
-			'players' => 15,
-			'max_players' => 100,
-			'motd' => 'Example motd',
-			'icon' => '',
-			'favicon' => '',
-			'last_check' => \XF::$time,
-		];
+		$provider = $this->getProvider($server->game);
+		if (!$provider)
+		{
+			return [
+				'online' => false,
+				'players' => 0,
+				'max_players' => 0,
+				'motd' => 'Unsupported game type',
+				'icon' => '',
+				'favicon' => '',
+			];
+		}
+
+		return $provider->fetchStatus($server);
+	}
+
+	protected function getProvider(string $gameType): ?AbstractProvider
+	{
+		return match ($gameType)
+		{
+			GameType::MINECRAFT->value => new Minecraft(),
+			default => null,
+		};
+
 	}
 }

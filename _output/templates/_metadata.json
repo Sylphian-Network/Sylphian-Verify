@@ -29,9 +29,14 @@
         "version_string": "1.0.0 Alpha",
         "hash": "245278255a7ff4a20ebdfc8a3ef37eaf"
     },
+    "public/sylphian_verify_game_server_status.html": {
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "079cf11972c5124cbf104597f284c9d5"
+    },
     "public/sylphian_verify_game_servers.html": {
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": "e3dfbcece114d4691df1c950d94a17da"
+        "hash": "dbf1320147dffcf3d0de058bb99667bb"
     }
 }
