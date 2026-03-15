@@ -8,3 +8,4 @@ An api for game servers to check against.
 
 ## Credits
 - Thanks to [MCHeads](https://mc-heads.net) for providing Minecraft avatars.
+- Thanks to [mcstatus](https://mcstatus.io) for providing Minecraft server api.
