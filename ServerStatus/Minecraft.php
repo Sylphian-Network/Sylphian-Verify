@@ -29,9 +29,10 @@ class Minecraft extends AbstractProvider
 				$status['players'] = $data['players']['online'] ?? 0;
 				$status['max_players'] = $data['players']['max'] ?? 0;
 
-				if (isset($data['motd']['clean']))
+				if (isset($data['motd']['html']))
 				{
-					$status['motd'] = implode("\n", (array) $data['motd']['clean']);
+					$html = implode('<br>', (array) $data['motd']['html']);
+					$status['motd'] = strip_tags($html, '<span><br>');
 				}
 
 				if (!empty($data['icon']))

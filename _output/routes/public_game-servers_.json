@@ -1,6 +1,6 @@
 {
     "route_type": "public",
-    "route_prefix": "game_servers",
+    "route_prefix": "game-servers",
     "sub_name": "",
     "format": "",
     "build_class": "",

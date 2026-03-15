@@ -17,7 +17,7 @@
     <div class="block-row block-row--separated" 
         data-xf-init="server-status-loader" 
         data-server-id="{$server.server_id}"
-        data-status-url="{{ link('game_servers/status') }}">
+        data-status-url="{{ link('game-servers/status') }}">
         
         <xf:macro name="server_status" arg-server="{$server}" arg-loading="{{ true }}" />
     </div>
@@ -35,18 +35,17 @@
             </xf:if>
         </div>
         <div class="contentRow-main">
-            <h3 class="contentRow-header">{$server.title}</h3>
+			<h3 class="contentRow-header">{$server.title}
+				<xf:if is="$loading">
+					<span class="label label--gray">{{ phrase('sylphian_verify_loading_status') }}</span>
+				<xf:elseif is="$server.online" />
+					<span class="label label--green">{{ phrase('sylphian_verify_online') }}</span>
+				<xf:else />
+					<span class="label label--red">{{ phrase('sylphian_verify_offline') }}</span>
+				</xf:if>
+			</h3>
             <div class="contentRow-minor">
                 <ul class="listInline listInline--bullet">
-                    <li>
-                        <xf:if is="$loading">
-                            <span class="label label--gray">{{ phrase('sylphian_verify_loading_status') }}</span>
-                        <xf:elseif is="$server.online" />
-                            <span class="label label--green">{{ phrase('sylphian_verify_online') }}</span>
-                        <xf:else />
-                            <span class="label label--red">{{ phrase('sylphian_verify_offline') }}</span>
-                        </xf:if>
-                    </li>
                     <xf:if is="$server.game_label">
                         <li>{$server.game_label}</li>
                     </xf:if>
