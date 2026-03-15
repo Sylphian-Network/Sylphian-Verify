@@ -15,7 +15,6 @@ class Verify extends Controller
 
 		$viewParams = [
 			'servers' => $servers,
-			'statuses' => $servers,
 		];
 
 		return $this->view('Sylphian\Verify:Verify', 'sylphian_verify_game_servers', $viewParams);
