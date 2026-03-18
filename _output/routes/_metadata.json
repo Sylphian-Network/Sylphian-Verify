@@ -1,5 +1,11 @@
 {
+    "admin_sylphian-verify-manage-servers_.json": {
+        "hash": "072386608dc19d1eab24a6537dfc969a"
+    },
     "api_verify_.json": {
         "hash": "540aca83302dfa8b1e90dbc6e1062dcc"
+    },
+    "public_game-servers_.json": {
+        "hash": "79c7047ee169ff39e402e0804d040df7"
     }
 }

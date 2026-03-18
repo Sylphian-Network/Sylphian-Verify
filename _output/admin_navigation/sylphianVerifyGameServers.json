@@ -1,0 +1,11 @@
+{
+    "parent_navigation_id": "setup",
+    "display_order": 2500,
+    "link": "",
+    "icon": "fa-server",
+    "admin_permission_id": "",
+    "debug_only": false,
+    "development_only": false,
+    "super_admin_only": false,
+    "hide_no_children": true
+}

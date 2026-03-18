@@ -233,8 +233,7 @@ class AccountController extends XFCP_AccountController
 	 */
 	protected function getVerificationRepo(): VerificationRepository
 	{
-		/** @noinspection PhpIncompatibleReturnTypeInspection */
-		return $this->repository('Sylphian\Verify:Verification');
+		return $this->repository(VerificationRepository::class);
 	}
 
 	/**

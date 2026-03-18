@@ -1,0 +1,65 @@
+<xf:title>{{ phrase('sylphian_verify_our_servers') }}</xf:title>
+
+<xf:js src="sylphian/verify/status.js" />
+
+<div class="block">
+    <div class="block-container">
+        <div class="block-body">
+            <xf:foreach loop="$servers" value="$server">
+                <xf:macro name="server_display" 
+                    arg-server="{$server}" />
+            </xf:foreach>
+        </div>
+    </div>
+</div>
+
+<xf:macro name="server_display" arg-server="!">
+    <div class="block-row block-row--separated" 
+        data-xf-init="server-status-loader" 
+        data-server-id="{$server.server_id}"
+        data-status-url="{{ link('game-servers/status') }}">
+        
+        <xf:macro name="server_status" arg-server="{$server}" arg-loading="{{ true }}" />
+    </div>
+</xf:macro>
+
+<xf:macro name="server_status" arg-server="!" arg-loading="{{ false }}">
+    <div class="contentRow contentRow--alignMiddle">
+        <div class="contentRow-figure">
+            <xf:if is="!$loading && $server.icon">
+                <img src="{$server.icon}" style="width: 48px; height: 48px; border-radius: 4px;" alt="" />
+            <xf:elseif is="!$loading && $server.favicon" />
+                <img src="{$server.favicon}" style="width: 48px; height: 48px; border-radius: 4px;" alt="" />
+            <xf:else />
+                <xf:fa icon="fa-server" style="width: 48px; height: 48px; opacity: 0.8" />
+            </xf:if>
+        </div>
+        <div class="contentRow-main">
+			<h3 class="contentRow-header">{$server.title}
+				<xf:if is="$loading">
+					<span class="label label--gray">{{ phrase('sylphian_verify_loading_status') }}</span>
+				<xf:elseif is="$server.online" />
+					<span class="label label--green">{{ phrase('sylphian_verify_online') }}</span>
+				<xf:else />
+					<span class="label label--red">{{ phrase('sylphian_verify_offline') }}</span>
+				</xf:if>
+			</h3>
+            <div class="contentRow-minor">
+                <ul class="listInline listInline--bullet">
+                    <xf:if is="$server.game_label">
+                        <li>{$server.game_label}</li>
+                    </xf:if>
+                    <xf:if is="!$loading">
+                         <li>{{ phrase('sylphian_verify_players') }}: {$server.players|default(0)} / {$server.max_players|default(0)}</li>
+                    </xf:if>
+                    <xf:if is="$server.host">
+                        <li><code class="u-muted">{$server.host}<xf:if is="$server.port">:{$server.port}</xf:if></code></li>
+                    </xf:if>
+                </ul>
+            </div>
+            <xf:if is="!$loading && $server.motd">
+                <div class="contentRow-snippet">{$server.motd|raw}</div>
+            </xf:if>
+        </div>
+    </div>
+</xf:macro>

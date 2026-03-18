@@ -1,0 +1,29 @@
+<xf:title>{{ phrase('sylphian_verify_game_servers') }}</xf:title>
+
+<xf:pageaction>
+	<xf:button href="{{ link('sylphian-verify-manage-servers/add') }}" icon="add" overlay="true">{{ phrase('sylphian_verify_add_server') }}</xf:button>
+</xf:pageaction>
+
+<xf:if is="$servers is not empty">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist>
+					<xf:foreach loop="$servers" value="$server">
+						<xf:datarow label="{$server.title}"
+									hint="{$server.game}"
+									explain="{$server.host}:{$server.port}"
+									href="{{ link('sylphian-verify-manage-servers/edit', $server) }}"
+									overlay="true"
+									delete="{{ link('sylphian-verify-manage-servers/delete', $server) }}" />
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($servers) }}</span>
+			</div>
+		</div>
+	</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('sylphian_verify_no_servers_created_yet') }}</div>
+</xf:if>

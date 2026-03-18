@@ -1,4 +1,16 @@
 {
+    "admin_navigation.sylphianVerifyGameServers.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "a6e87bf4596ee74a7f972c0571532005"
+    },
+    "admin_navigation.sylphianVerifyGameServersManagement.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "3b5f194f1b464ae2fb5a3a00a6e52435"
+    },
     "api_scope.sylphian_verify_read.txt": {
         "global_cache": false,
         "version_id": 1000010,
@@ -89,11 +101,53 @@
         "version_string": "1.0.0 Alpha",
         "hash": "b9b0b81e8bf62bb7591c40dee2b9e0de"
     },
+    "sylphian_verify_add_server.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "74c9e12c3a19cfb79b79faf579934844"
+    },
+    "sylphian_verify_confirm_delete_server.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "5cfe60b57e190349405fa534532a1a5a"
+    },
     "sylphian_verify_confirmed.txt": {
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "205bc73c4ab4286a1fb9d4c18322777c"
+    },
+    "sylphian_verify_edit_server.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "237f5ee0356716eb2888e8ebabdb72b7"
+    },
+    "sylphian_verify_game_minecraft.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "e3416675e3a20772d0b78f45f4ce995d"
+    },
+    "sylphian_verify_game_servers.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "2560e819bde0af1bc3941d0ab076c667"
+    },
+    "sylphian_verify_game_type.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "d5ec7e6a36445a0e19dd05d239ca8712"
+    },
+    "sylphian_verify_host.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "c2ca16d048ec66e04bca283eab048ec2"
     },
     "sylphian_verify_invalid_passcode_or_expired.txt": {
         "global_cache": false,
@@ -112,6 +166,12 @@
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "06d7e3b06a54e241eba1c1650b6c0d85"
+    },
+    "sylphian_verify_loading_status.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "8524de963f07201e5c086830d370797f"
     },
     "sylphian_verify_minecraft_account_not_found.txt": {
         "global_cache": false,
@@ -149,11 +209,41 @@
         "version_string": "1.0.0 Alpha",
         "hash": "2928d62e64d64c9cc01db7e499e6c7bd"
     },
+    "sylphian_verify_offline.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "8d9da4bc0e49a50e09ac9f7e56789d39"
+    },
+    "sylphian_verify_online.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "54f664c70c22054ea0d8d26fc3997ce7"
+    },
+    "sylphian_verify_our_servers.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "58a549deec18b53ec2c6f42480fe3c53"
+    },
+    "sylphian_verify_players.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "93ec972c68d5caca43370a9746a08cea"
+    },
     "sylphian_verify_please_fill_all_fields.txt": {
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "d5a03ec61f5c7abfbd1ab4bc06b3216a"
+    },
+    "sylphian_verify_port.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "60aaf44d4b562252c04db7f98497e9aa"
     },
     "sylphian_verify_too_many_accounts.txt": {
         "global_cache": false,
