@@ -3,7 +3,6 @@
 namespace Sylphian\Verify\XF\Pub\Controller;
 
 use GuzzleHttp\Exception\GuzzleException;
-use Psr\Cache\InvalidArgumentException;
 use Sylphian\Library\Logger\AddonLogger;
 use Sylphian\Library\Logger\Logger;
 use Sylphian\Verify\Entity\Account;
@@ -176,7 +175,6 @@ class AccountController extends XFCP_AccountController
 
 	/**
 	 * @throws Exception
-	 * @throws InvalidArgumentException
 	 * @throws PrintableException
 	 */
 	public function actionMinecraftVerify(): AbstractReply
@@ -208,8 +206,8 @@ class AccountController extends XFCP_AccountController
 			$account->confirmed_date = \XF::$time;
 			$account->save();
 
-			$cache = $this->app()->cache('', true, false);
-			$cache?->deleteItem("sylphian_verify_passcode_{$account->account_id}");
+			$cache = $this->app()->cache();
+			$cache?->delete("sylphian_verify_passcode_{$account->account_id}");
 			$repo->resetFailedAttempts($account);
 
 			return $this->redirect($this->buildLink('account/minecraft'), \XF::phrase('sylphian_verify_account_confirmed_successfully'));

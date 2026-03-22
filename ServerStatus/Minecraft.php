@@ -9,7 +9,12 @@ class Minecraft extends AbstractProvider
 {
 	protected const string API_URL = 'https://api.mcstatus.io/v2/status/java/%s:%d';
 
-	public function fetchStatus(GameServer $server): array
+	protected function getRateLimit(): array
+	{
+		return [5, 1];
+	}
+
+	protected function doFetchStatus(GameServer $server): array
 	{
 		$client = \XF::app()->http()->client();
 		$status = $this->getDefaultStatus();

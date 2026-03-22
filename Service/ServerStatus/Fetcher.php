@@ -14,14 +14,14 @@ class Fetcher extends AbstractService
 
 	public function getStatus(GameServer $server): array
 	{
-		$cache = $this->app->cache('', true, false);
+		$cache = $this->app->cache();
 		if (!$cache)
 		{
 			return [];
 		}
 
-		$item = $cache->getItem($this->getCacheKey($server));
-		return $item->isHit() ? (array) $item->get() : [];
+		$data = $cache->fetch($this->getCacheKey($server));
+		return is_array($data) ? $data : [];
 	}
 
 	public function refreshStatus(GameServer $server): array
@@ -46,10 +46,7 @@ class Fetcher extends AbstractService
 		$cache = $this->app->cache();
 		if ($cache)
 		{
-			$item = $cache->getItem($this->getCacheKey($server));
-			$item->set($status);
-			$item->expiresAfter(self::CACHE_TTL);
-			$cache->save($item);
+			$cache->save($this->getCacheKey($server), $status, self::CACHE_TTL);
 		}
 
 		return $status;

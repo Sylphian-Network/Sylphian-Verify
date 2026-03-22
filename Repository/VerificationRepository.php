@@ -58,13 +58,12 @@ class VerificationRepository extends Repository
 	 */
 	public function getPasscodeDetails(Account $account): array
 	{
-		$cache = $this->app()->cache('', true, false);
+		$cache = $this->app()->cache();
 		$cacheKey = "sylphian_verify_passcode_{$account->account_id}";
-		$item = $cache?->getItem($cacheKey);
+		$data = $cache ? $cache->fetch($cacheKey) : false;
 
-		if ($item && $item->isHit())
+		if (is_array($data))
 		{
-			$data = $item->get();
 			$passcode = $data['passcode'] ?? '';
 			$expiry = $data['expiry'] ?? 0;
 		}
@@ -73,14 +72,12 @@ class VerificationRepository extends Repository
 			$passcode = str_pad((string) mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
 			$expiryTime = $this->options()->sylphian_verify_passcode_expiry ?: 600;
 			$expiry = \XF::$time + $expiryTime;
-			if ($cache && $item)
+			if ($cache)
 			{
-				$item->set([
+				$cache->save($cacheKey, [
 					'passcode' => $passcode,
 					'expiry' => $expiry,
-				]);
-				$item->expiresAt(new \DateTime("@$expiry"));
-				$cache->save($item);
+				], $expiryTime);
 			}
 		}
 
@@ -97,18 +94,18 @@ class VerificationRepository extends Repository
 	 */
 	public function getBruteForceDetails(Account $account): array
 	{
-		$cache = $this->app()->cache('', true, false);
+		$cache = $this->app()->cache();
 		if (!$cache)
 		{
 			return ['is_blocked' => false, 'attempts' => 0];
 		}
 
 		$failedKey = "sylphian_verify_failed_attempts_{$account->account_id}";
-		$item = $cache->getItem($failedKey);
+		$data = $cache->fetch($failedKey);
 
 		$limit = $this->options()->sylphian_verify_failed_attempts_limit ?: 5;
 
-		if (!$item->isHit())
+		if (!is_array($data))
 		{
 			return [
 				'is_blocked' => false,
@@ -119,7 +116,6 @@ class VerificationRepository extends Repository
 			];
 		}
 
-		$data = $item->get();
 		$attempts = $data['attempts'] ?? 0;
 		$expiry = $data['expiry'] ?? 0;
 
@@ -138,26 +134,23 @@ class VerificationRepository extends Repository
 	 */
 	public function increaseFailedAttempts(Account $account): void
 	{
-		$cache = $this->app()->cache('', true, false);
+		$cache = $this->app()->cache();
 		if (!$cache)
 		{
 			return;
 		}
 
 		$failedKey = "sylphian_verify_failed_attempts_{$account->account_id}";
-		$item = $cache->getItem($failedKey);
+		$data = $cache->fetch($failedKey);
 
-		$data = $item->isHit() ? $item->get() : null;
-		$attempts = ($data['attempts'] ?? 0) + 1;
+		$attempts = (($data['attempts'] ?? 0) ?: 0) + 1;
 		$blockDuration = $this->options()->sylphian_verify_block_expiry ?: 3600;
 		$expiry = ($data['expiry'] ?? 0) ?: (\XF::$time + $blockDuration);
 
-		$item->set([
+		$cache->save($failedKey, [
 			'attempts' => $attempts,
 			'expiry' => $expiry,
-		]);
-		$item->expiresAt(new \DateTime("@$expiry"));
-		$cache->save($item);
+		], max(0, $expiry - \XF::$time));
 	}
 
 	/**
@@ -166,7 +159,7 @@ class VerificationRepository extends Repository
 	 */
 	public function resetFailedAttempts(Account $account): void
 	{
-		$cache = $this->app()->cache('', true, false);
-		$cache?->deleteItem("sylphian_verify_failed_attempts_{$account->account_id}");
+		$cache = $this->app()->cache();
+		$cache?->delete("sylphian_verify_failed_attempts_{$account->account_id}");
 	}
 }
