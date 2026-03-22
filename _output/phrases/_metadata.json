@@ -17,6 +17,12 @@
         "version_string": "1.0.0 Alpha",
         "hash": "ccf1cf6e117f30abbfb0dde0365f1729"
     },
+    "cron_entry.syl_verify_server_list.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "22195e375fdff5c6eb7c75e0621e8804"
+    },
     "option.sylphian_verify_block_expiry.txt": {
         "global_cache": false,
         "version_id": 1000010,

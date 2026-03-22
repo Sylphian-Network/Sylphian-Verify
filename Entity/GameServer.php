@@ -29,7 +29,7 @@ class GameServer extends Entity
 {
 	protected $_status = null;
 
-	protected function getLiveStatus()
+	protected function getCachedStatus()
 	{
 		if ($this->_status === null)
 		{
@@ -41,32 +41,32 @@ class GameServer extends Entity
 
 	public function getMotd(): string
 	{
-		return (string) ($this->getLiveStatus()['motd'] ?? '');
+		return (string) ($this->getCachedStatus()['motd'] ?? '');
 	}
 
 	public function getPlayers(): int
 	{
-		return $this->getLiveStatus()['players'] ?? 0;
+		return $this->getCachedStatus()['players'] ?? 0;
 	}
 
 	public function getMaxPlayers(): int
 	{
-		return (int) ($this->getLiveStatus()['max_players'] ?? 0);
+		return (int) ($this->getCachedStatus()['max_players'] ?? 0);
 	}
 
 	public function getOnline(): bool
 	{
-		return $this->getLiveStatus()['online'] ?? false;
+		return $this->getCachedStatus()['online'] ?? false;
 	}
 
 	public function getIcon(): string
 	{
-		return (string) ($this->getLiveStatus()['icon'] ?? '');
+		return (string) ($this->getCachedStatus()['icon'] ?? '');
 	}
 
 	public function getFavicon(): string
 	{
-		return (string) ($this->getLiveStatus()['favicon'] ?? '');
+		return (string) ($this->getCachedStatus()['favicon'] ?? '');
 	}
 
 	public function getGameLabel(): Phrase|string
