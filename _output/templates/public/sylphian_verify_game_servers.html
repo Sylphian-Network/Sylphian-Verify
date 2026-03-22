@@ -69,6 +69,11 @@
             <xf:if is="$server.motd">
                 <div class="contentRow-snippet motd-container">{$server.motd|raw}</div>
             </xf:if>
+			<div class="contentRow-extra">
+				<xf:if is="$server.last_updated">
+					<span class="u-muted">{{ phrase('last_updated') }}: <xf:date time="{$server.last_updated}" /></span>
+				</xf:if>
+			</div>
         </div>
     </div>
 </xf:macro>

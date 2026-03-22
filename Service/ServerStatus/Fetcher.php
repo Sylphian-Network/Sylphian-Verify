@@ -43,6 +43,8 @@ class Fetcher extends AbstractService
 			];
 		}
 
+		$status['last_updated'] = \XF::$time;
+
 		$cache = $this->app->cache();
 		if ($cache)
 		{

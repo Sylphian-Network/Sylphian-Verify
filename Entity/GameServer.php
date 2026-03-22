@@ -24,6 +24,7 @@ use XF\Phrase;
  * @property string $icon
  * @property string $favicon
  * @property string $game_label
+ * @property int $last_updated
  */
 class GameServer extends Entity
 {
@@ -80,6 +81,11 @@ class GameServer extends Entity
 		return $this->game;
 	}
 
+	public function getLastUpdated(): int
+	{
+		return (int) ($this->getCachedStatus()['last_updated'] ?? 0);
+	}
+
 	public static function getStructure(Structure $structure): Structure
 	{
 		$structure->table = 'xf_sylphian_verify_server';
@@ -100,6 +106,7 @@ class GameServer extends Entity
 			'icon' => true,
 			'favicon' => true,
 			'game_label' => true,
+			'last_updated' => true,
 		];
 		$structure->relations = [];
 
