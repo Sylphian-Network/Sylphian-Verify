@@ -1,34 +1,47 @@
 <xf:title>{{ phrase('sylphian_verify_our_servers') }}</xf:title>
 
-<xf:js src="sylphian/verify/status.js" />
+<xf:css>
+.motd-container {
+    font-family: "Courier New", Courier, monospace;
+    background: #1f1f1f;
+    border: 1px solid #2b2b2b;
+    border-radius: 6px;
+    padding: 8px 10px;
+    line-height: 1.3;
+    font-size: 13px;
+    color: #ddd;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+</xf:css>
 
 <div class="block">
     <div class="block-container">
         <div class="block-body">
-            <xf:foreach loop="$servers" value="$server">
-                <xf:macro name="server_display" 
-                    arg-server="{$server}" />
-            </xf:foreach>
+            <xf:if is="$servers is not empty">
+                <xf:foreach loop="$servers" value="$server">
+                    <xf:macro name="server_display" 
+                        arg-server="{$server}" />
+                </xf:foreach>
+            <xf:else />
+                <div class="block-row">{{ phrase('sylphian_verify_no_servers_found') }}</div>
+            </xf:if>
         </div>
     </div>
 </div>
 
 <xf:macro name="server_display" arg-server="!">
-    <div class="block-row block-row--separated" 
-        data-xf-init="server-status-loader" 
-        data-server-id="{$server.server_id}"
-        data-status-url="{{ link('game-servers/status') }}">
-        
-        <xf:macro name="server_status" arg-server="{$server}" arg-loading="{{ true }}" />
+    <div class="block-row block-row--separated">
+        <xf:macro name="server_status" arg-server="{$server}" />
     </div>
 </xf:macro>
 
-<xf:macro name="server_status" arg-server="!" arg-loading="{{ false }}">
+<xf:macro name="server_status" arg-server="!">
     <div class="contentRow contentRow--alignMiddle">
         <div class="contentRow-figure">
-            <xf:if is="!$loading && $server.icon">
+            <xf:if is="$server.icon">
                 <img src="{$server.icon}" style="width: 48px; height: 48px; border-radius: 4px;" alt="" />
-            <xf:elseif is="!$loading && $server.favicon" />
+            <xf:elseif is="$server.favicon" />
                 <img src="{$server.favicon}" style="width: 48px; height: 48px; border-radius: 4px;" alt="" />
             <xf:else />
                 <xf:fa icon="fa-server" style="width: 48px; height: 48px; opacity: 0.8" />
@@ -36,9 +49,7 @@
         </div>
         <div class="contentRow-main">
 			<h3 class="contentRow-header">{$server.title}
-				<xf:if is="$loading">
-					<span class="label label--gray">{{ phrase('sylphian_verify_loading_status') }}</span>
-				<xf:elseif is="$server.online" />
+				<xf:if is="$server.online">
 					<span class="label label--green">{{ phrase('sylphian_verify_online') }}</span>
 				<xf:else />
 					<span class="label label--red">{{ phrase('sylphian_verify_offline') }}</span>
@@ -49,17 +60,20 @@
                     <xf:if is="$server.game_label">
                         <li>{$server.game_label}</li>
                     </xf:if>
-                    <xf:if is="!$loading">
-                         <li>{{ phrase('sylphian_verify_players') }}: {$server.players|default(0)} / {$server.max_players|default(0)}</li>
-                    </xf:if>
+                    <li>{{ phrase('sylphian_verify_players') }}: {$server.players|default(0)} / {$server.max_players|default(0)}</li>
                     <xf:if is="$server.host">
                         <li><code class="u-muted">{$server.host}<xf:if is="$server.port">:{$server.port}</xf:if></code></li>
                     </xf:if>
                 </ul>
             </div>
-            <xf:if is="!$loading && $server.motd">
-                <div class="contentRow-snippet">{$server.motd|raw}</div>
+            <xf:if is="$server.motd">
+                <div class="contentRow-snippet motd-container">{$server.motd|raw}</div>
             </xf:if>
+			<div class="contentRow-extra">
+				<xf:if is="$server.last_updated">
+					<span class="u-muted">{{ phrase('last_updated') }}: <xf:date time="{$server.last_updated}" /></span>
+				</xf:if>
+			</div>
         </div>
     </div>
 </xf:macro>

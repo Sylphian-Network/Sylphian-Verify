@@ -17,6 +17,12 @@
         "version_string": "1.0.0 Alpha",
         "hash": "ccf1cf6e117f30abbfb0dde0365f1729"
     },
+    "cron_entry.syl_verify_server_list.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "22195e375fdff5c6eb7c75e0621e8804"
+    },
     "option.sylphian_verify_block_expiry.txt": {
         "global_cache": false,
         "version_id": 1000010,
@@ -167,12 +173,6 @@
         "version_string": "1.0.0 Alpha",
         "hash": "06d7e3b06a54e241eba1c1650b6c0d85"
     },
-    "sylphian_verify_loading_status.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "8524de963f07201e5c086830d370797f"
-    },
     "sylphian_verify_minecraft_account_not_found.txt": {
         "global_cache": false,
         "version_id": 1000010,
@@ -208,6 +208,12 @@
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "2928d62e64d64c9cc01db7e499e6c7bd"
+    },
+    "sylphian_verify_no_servers_found.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "9de94f6c1a4808755f14482e04f7f0c9"
     },
     "sylphian_verify_offline.txt": {
         "global_cache": false,
