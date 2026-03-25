@@ -77,6 +77,7 @@ class ServerManagement extends AbstractController
 			'game' => 'str',
 			'host' => 'str',
 			'port' => 'uint',
+			'show_port' => 'bool',
 		]);
 
 		$form->basicEntitySave($server, $input);

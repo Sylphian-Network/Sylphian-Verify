@@ -62,7 +62,7 @@
                     </xf:if>
                     <li>{{ phrase('sylphian_verify_players') }}: {$server.players|default(0)} / {$server.max_players|default(0)}</li>
                     <xf:if is="$server.host">
-                        <li><code class="u-muted">{$server.host}<xf:if is="$server.port">:{$server.port}</xf:if></code></li>
+                        <li><code class="u-muted">{$server.host}<xf:if is="$server.port && $server.show_port">:{$server.port}</xf:if></code></li>
                     </xf:if>
                 </ul>
             </div>

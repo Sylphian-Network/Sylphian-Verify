@@ -15,6 +15,7 @@ use XF\Phrase;
  * @property string $game
  * @property string $host
  * @property int $port
+ * @property bool $show_port
  *
  * GETTERS
  * @property string $motd
@@ -97,6 +98,7 @@ class GameServer extends Entity
 			'game' => ['type' => self::STR, 'maxLength' => 50, 'required' => true],
 			'host' => ['type' => self::STR, 'maxLength' => 100, 'required' => true],
 			'port' => ['type' => self::UINT, 'required' => true, 'default' => 25565],
+			'show_port' => ['type' => self::BOOL, 'default' => true],
 		];
 		$structure->getters = [
 			'motd' => true,
