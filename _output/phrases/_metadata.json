@@ -11,6 +11,12 @@
         "version_string": "1.0.0 Alpha",
         "hash": "3b5f194f1b464ae2fb5a3a00a6e52435"
     },
+    "admin_permission.syl_verify_manageServers.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "d599d8e8c05f598eaa60a671876adda8"
+    },
     "api_scope.sylphian_verify_read.txt": {
         "global_cache": false,
         "version_id": 1000010,
