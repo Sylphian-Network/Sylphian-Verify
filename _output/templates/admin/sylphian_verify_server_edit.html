@@ -25,6 +25,11 @@
 							 min="1" max="65535"
 							 step="1"
 							 required="true" />
+			
+			<xf:checkboxrow>
+				<xf:option name="show_port" selected="{$server.show_port}"
+						   label="{{ phrase('sylphian_verify_show_port') }}" />
+			</xf:checkboxrow>
 		</div>
 		<xf:submitrow icon="save" sticky="true" />
 	</div>

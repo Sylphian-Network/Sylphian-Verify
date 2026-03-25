@@ -42,6 +42,7 @@ class Setup extends AbstractSetup
 			$table->addColumn('game', 'varchar', 50);
 			$table->addColumn('host', 'varchar', 100);
 			$table->addColumn('port', 'int')->unsigned()->setDefault(25565);
+			$table->addColumn('show_port', 'tinyint')->setDefault(1);
 
 			$table->addPrimaryKey('server_id');
 		});

@@ -251,6 +251,12 @@
         "version_string": "1.0.0 Alpha",
         "hash": "60aaf44d4b562252c04db7f98497e9aa"
     },
+    "sylphian_verify_show_port.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "d7c222a761cd88b8a6116afb91e58e94"
+    },
     "sylphian_verify_too_many_accounts.txt": {
         "global_cache": false,
         "version_id": 1000010,
