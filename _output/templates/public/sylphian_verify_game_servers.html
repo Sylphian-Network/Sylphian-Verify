@@ -15,65 +15,81 @@
 }
 </xf:css>
 
-<div class="block">
-    <div class="block-container">
-        <div class="block-body">
-            <xf:if is="$servers is not empty">
-                <xf:foreach loop="$servers" value="$server">
-                    <xf:macro name="server_display" 
-                        arg-server="{$server}" />
-                </xf:foreach>
-            <xf:else />
-                <div class="block-row">{{ phrase('sylphian_verify_no_servers_found') }}</div>
-            </xf:if>
-        </div>
-    </div>
-</div>
+<xf:if is="$serversGrouped is not empty">
+	<xf:if is="$serversGrouped.0 is not empty">
+		<xf:foreach loop="$serversGrouped.0" value="$server">
+			<div class="block">
+				<div class="block-container">
+					<xf:macro name="server_display" arg-server="{$server}" />
+				</div>
+			</div>
+		</xf:foreach>
+	</xf:if>
+
+	<xf:foreach loop="$categories" value="$category">
+		<xf:set var="$group" value="{$serversGrouped.{$category.category_id}}" />
+		<xf:if is="$group is not empty">
+			<div class="block">
+				<div class="block-container">
+					<h3 class="block-header">
+						{$category.title}
+						<xf:if is="$category.description is not empty">
+							<span class="block-desc">{$category.description|raw}</span>
+						</xf:if>
+					</h3>
+					<div class="block-body">
+						<xf:foreach loop="$group" value="$server">
+							<xf:macro name="server_display" arg-server="{$server}" />
+						</xf:foreach>
+					</div>
+				</div>
+			</div>
+		</xf:if>
+	</xf:foreach>
+<xf:else />
+	<div class="block-row">{{ phrase('sylphian_verify_no_servers_found') }}</div>
+</xf:if>
 
 <xf:macro name="server_display" arg-server="!">
     <div class="block-row block-row--separated">
-        <xf:macro name="server_status" arg-server="{$server}" />
-    </div>
-</xf:macro>
-
-<xf:macro name="server_status" arg-server="!">
-    <div class="contentRow contentRow--alignMiddle">
-        <div class="contentRow-figure">
-            <xf:if is="$server.icon">
-                <img src="{$server.icon}" style="width: 48px; height: 48px; border-radius: 4px;" alt="" />
-            <xf:elseif is="$server.favicon" />
-                <img src="{$server.favicon}" style="width: 48px; height: 48px; border-radius: 4px;" alt="" />
-            <xf:else />
-                <xf:fa icon="fa-server" style="width: 48px; height: 48px; opacity: 0.8" />
-            </xf:if>
-        </div>
-        <div class="contentRow-main">
-			<h3 class="contentRow-header">{$server.title}
-				<xf:if is="$server.online">
-					<span class="label label--green">{{ phrase('sylphian_verify_online') }}</span>
-				<xf:else />
-					<span class="label label--red">{{ phrase('sylphian_verify_offline') }}</span>
-				</xf:if>
-			</h3>
-            <div class="contentRow-minor">
-                <ul class="listInline listInline--bullet">
-                    <xf:if is="$server.game_label">
-                        <li>{$server.game_label}</li>
-                    </xf:if>
-                    <li>{{ phrase('sylphian_verify_players') }}: {$server.players|default(0)} / {$server.max_players|default(0)}</li>
-                    <xf:if is="$server.host">
-                        <li><code class="u-muted">{$server.host}<xf:if is="$server.port && $server.show_port">:{$server.port}</xf:if></code></li>
-                    </xf:if>
-                </ul>
+        <div class="contentRow contentRow--alignMiddle">
+            <div class="contentRow-figure">
+                <xf:if is="$server.icon">
+                    <img src="{$server.icon}" style="width: 48px; height: 48px; border-radius: 4px;" alt="" />
+                <xf:elseif is="$server.favicon" />
+                    <img src="{$server.favicon}" style="width: 48px; height: 48px; border-radius: 4px;" alt="" />
+                <xf:else />
+                    <xf:fa icon="fa-server" style="width: 48px; height: 48px; opacity: 0.8" />
+                </xf:if>
             </div>
-            <xf:if is="$server.motd">
-                <div class="contentRow-snippet motd-container">{$server.motd|raw}</div>
-            </xf:if>
-			<div class="contentRow-extra">
-				<xf:if is="$server.last_updated">
-					<span class="u-muted">{{ phrase('last_updated') }}: <xf:date time="{$server.last_updated}" /></span>
-				</xf:if>
-			</div>
+            <div class="contentRow-main">
+                <h3 class="contentRow-header">{$server.title}
+                    <xf:if is="$server.online">
+                        <span class="label label--green">{{ phrase('sylphian_verify_online') }}</span>
+                    <xf:else />
+                        <span class="label label--red">{{ phrase('sylphian_verify_offline') }}</span>
+                    </xf:if>
+                </h3>
+                <div class="contentRow-minor">
+                    <ul class="listInline listInline--bullet">
+                        <xf:if is="$server.game_label">
+                            <li>{$server.game_label}</li>
+                        </xf:if>
+                        <li>{{ phrase('sylphian_verify_players') }}: {$server.players|default(0)} / {$server.max_players|default(0)}</li>
+                        <xf:if is="$server.host">
+                            <li><code class="u-muted">{$server.host}<xf:if is="$server.port && $server.show_port">:{$server.port}</xf:if></code></li>
+                        </xf:if>
+                    </ul>
+                </div>
+                <xf:if is="$server.motd">
+                    <div class="contentRow-snippet motd-container">{$server.motd|raw}</div>
+                </xf:if>
+                <div class="contentRow-extra">
+                    <xf:if is="$server.last_updated">
+                        <span class="u-muted">{{ phrase('last_updated') }}: <xf:date time="{$server.last_updated}" /></span>
+                    </xf:if>
+                </div>
+            </div>
         </div>
     </div>
 </xf:macro>

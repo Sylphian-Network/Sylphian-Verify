@@ -1,0 +1,24 @@
+<xf:if is="$category.isInsert()">
+	<xf:title>{{ phrase('sylphian_verify_add_category') }}</xf:title>
+<xf:else />
+	<xf:title>{{ phrase('sylphian_verify_edit_category') }} {$category.title}</xf:title>
+</xf:if>
+
+<xf:form action="{{ link('sylphian-verify-manage-servers/category-save', $category) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:textboxrow name="title" value="{$category.title}"
+						   label="{{ phrase('title') }}"
+						   required="true" />
+
+			<xf:textarearow name="description" value="{$category.description}"
+							label="{{ phrase('description') }}"
+							autosize="true" />
+
+			<xf:numberboxrow name="display_order" value="{$category.display_order}"
+							 label="{{ phrase('display_order') }}"
+							 min="0" step="1" />
+		</div>
+		<xf:submitrow icon="save" sticky="true" />
+	</div>
+</xf:form>

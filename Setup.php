@@ -38,13 +38,30 @@ class Setup extends AbstractSetup
 		$this->schemaManager()->createTable('xf_sylphian_verify_server', function (Create $table)
 		{
 			$table->addColumn('server_id', 'int')->autoIncrement();
+			$table->addColumn('category_id', 'int')->setDefault(0);
 			$table->addColumn('title', 'varchar', 100);
 			$table->addColumn('game', 'varchar', 50);
 			$table->addColumn('host', 'varchar', 100);
 			$table->addColumn('port', 'int')->unsigned()->setDefault(25565);
 			$table->addColumn('show_port', 'tinyint')->setDefault(1);
+			$table->addColumn('display_order', 'int')->setDefault(1);
 
 			$table->addPrimaryKey('server_id');
+			$table->addKey('category_id');
+			$table->addKey('display_order');
+		});
+	}
+
+	public function installStep3(): void
+	{
+		$this->schemaManager()->createTable('xf_sylphian_verify_server_categories', function (Create $table)
+		{
+			$table->addColumn('category_id', 'int')->autoIncrement();
+			$table->addColumn('title', 'varchar', 100);
+			$table->addColumn('description', 'text')->nullable();
+			$table->addColumn('display_order', 'int')->setDefault(1);
+
+			$table->addPrimaryKey('category_id');
 		});
 	}
 
@@ -56,5 +73,10 @@ class Setup extends AbstractSetup
 	public function uninstallStep2(): void
 	{
 		$this->schemaManager()->dropTable('xf_sylphian_verify_server');
+	}
+
+	public function uninstallStep3(): void
+	{
+		$this->schemaManager()->dropTable('xf_sylphian_verify_server_categories');
 	}
 }

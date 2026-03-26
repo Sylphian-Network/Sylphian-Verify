@@ -10,6 +10,7 @@ class GameServerRepository extends Repository
 	public function findServersForList(): Finder
 	{
 		return $this->finder('Sylphian\Verify:GameServer')
+			->order('display_order', 'ASC')
 			->order('title', 'ASC');
 	}
 }

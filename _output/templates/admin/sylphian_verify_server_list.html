@@ -1,26 +1,91 @@
 <xf:title>{{ phrase('sylphian_verify_game_servers') }}</xf:title>
 
 <xf:pageaction>
-	<xf:button href="{{ link('sylphian-verify-manage-servers/add') }}" icon="add" overlay="true">{{ phrase('sylphian_verify_add_server') }}</xf:button>
+	<div class="buttonGroup">
+		<xf:button href="{{ link('sylphian-verify-manage-servers/add') }}" icon="add" overlay="true">{{ phrase('sylphian_verify_add_server') }}</xf:button>
+		<xf:button href="{{ link('sylphian-verify-manage-servers/category-add') }}" icon="add" overlay="true">{{ phrase('sylphian_verify_add_category') }}</xf:button>
+	</div>
 </xf:pageaction>
 
-<xf:if is="$servers is not empty">
+<xf:if is="$categories is not empty OR $serversGrouped.0 is not empty">
 	<div class="block">
 		<div class="block-container">
 			<div class="block-body">
 				<xf:datalist>
-					<xf:foreach loop="$servers" value="$server">
-						<xf:datarow label="{$server.title}"
-									hint="{$server.game}"
-									explain="{$server.host}:{$server.port}"
-									href="{{ link('sylphian-verify-manage-servers/edit', $server) }}"
-									overlay="true"
-									delete="{{ link('sylphian-verify-manage-servers/delete', $server) }}" />
+					<xf:datarow rowtype="header">
+						<xf:cell></xf:cell>
+						<xf:cell>{{ phrase('title') }}</xf:cell>
+						<xf:cell>{{ phrase('sylphian_verify_game_type') }}</xf:cell>
+						<xf:cell>{{ phrase('sylphian_verify_ip_port') }}</xf:cell>
+						<xf:cell>{{ phrase('sylphian_verify_show_port') }}</xf:cell>
+						<xf:cell></xf:cell>
+					</xf:datarow>
+
+					<xf:if is="$serversGrouped.0 is not empty">
+						<xf:datarow rowclass="dataList-row--subSection">
+							<xf:cell><xf:fa icon="fa-folder" /></xf:cell>
+							<xf:cell><strong>{{ phrase('none') }}</strong></xf:cell>
+							<xf:cell colspan="4"></xf:cell>
+						</xf:datarow>
+						<xf:foreach loop="$serversGrouped.0" value="$server">
+							<xf:datarow delete="{{ link('sylphian-verify-manage-servers/delete', $server) }}">
+								<xf:cell><xf:fa icon="fa-server" /></xf:cell>
+								<xf:cell class="dataList-cell--link dataList-cell--main">
+									<a href="{{ link('sylphian-verify-manage-servers/edit', $server) }}" data-xf-click="overlay">
+										{$server.title}
+									</a>
+								</xf:cell>
+								<xf:cell>{$server.game_label}</xf:cell>
+								<xf:cell>{$server.host}:{$server.port}</xf:cell>
+								<xf:cell>
+									<xf:if is="$server.show_port">
+										<xf:fa icon="fa-eye" title="{{ phrase('sylphian_verify_port_is_visible') }}" data-xf-init="tooltip" />
+									<xf:else />
+										<xf:fa icon="fa-eye-slash" title="{{ phrase('sylphian_verify_port_is_hidden') }}" data-xf-init="tooltip" />
+									</xf:if>
+								</xf:cell>
+							</xf:datarow>
+						</xf:foreach>
+					</xf:if>
+
+					<xf:foreach loop="$categories" value="$category">
+						<xf:datarow rowclass="dataList-row--subSection"
+									delete="{{ link('sylphian-verify-manage-servers/category-delete', $category) }}">
+							<xf:cell><xf:fa icon="fa-folder" /></xf:cell>
+							<xf:cell class="dataList-cell--link dataList-cell--main">
+								<a href="{{ link('sylphian-verify-manage-servers/category-edit', $category) }}" data-xf-click="overlay">
+									<strong>{$category.title}</strong>
+								</a>
+							</xf:cell>
+							<xf:cell colspan="3">
+								<span class="u-muted">{$category.description}</span>
+							</xf:cell>
+						</xf:datarow>
+						
+						<xf:foreach loop="{$serversGrouped.{$category.category_id}}" value="$server">
+							<xf:datarow delete="{{ link('sylphian-verify-manage-servers/delete', $server) }}">
+								<xf:cell><xf:fa icon="fa-server" /></xf:cell>
+								<xf:cell class="dataList-cell--link dataList-cell--main">
+									<a href="{{ link('sylphian-verify-manage-servers/edit', $server) }}" data-xf-click="overlay">
+										{$server.title}
+									</a>
+								</xf:cell>
+								<xf:cell>{$server.game_label}</xf:cell>
+								<xf:cell>{$server.host}:{$server.port}</xf:cell>
+								<xf:cell>
+									<xf:if is="$server.show_port">
+										<xf:fa icon="fa-eye" title="{{ phrase('sylphian_verify_port_is_visible') }}" data-xf-init="tooltip" />
+									<xf:else />
+										<xf:fa icon="fa-eye-slash" title="{{ phrase('sylphian_verify_port_is_hidden') }}" data-xf-init="tooltip" />
+									</xf:if>
+								</xf:cell>
+							</xf:datarow>
+						</xf:foreach>
 					</xf:foreach>
 				</xf:datalist>
 			</div>
 			<div class="block-footer">
-				<span class="block-footer-counter">{{ display_totals($servers) }}</span>
+				<span class="block-footer-counter">{{ display_totals($totalServers) }}</span>
 			</div>
 		</div>
 	</div>

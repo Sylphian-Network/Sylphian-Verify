@@ -1,4 +1,14 @@
 {
+    "admin/sylphian_verify_category_delete.html": {
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "64c7f2cf9f8315f107207166900f6694"
+    },
+    "admin/sylphian_verify_category_edit.html": {
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "8e45dfba24c5255b8452c76ae2d44125"
+    },
     "admin/sylphian_verify_option_macros.html": {
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
@@ -12,12 +22,12 @@
     "admin/sylphian_verify_server_edit.html": {
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": "d21725cb959260abda15313eba6f8273"
+        "hash": "8e42a74decf634b4464b684008c61667"
     },
     "admin/sylphian_verify_server_list.html": {
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": "8fda37b945e0339554c10f87f192ec59"
+        "hash": "fbc2f3e19d10513e4e3ede920ff64d1d"
     },
     "public/sylphian_verify_account_minecraft.html": {
         "version_id": 1000010,
@@ -32,6 +42,6 @@
     "public/sylphian_verify_game_servers.html": {
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": "1d9345127137d5be64db01e54baa5365"
+        "hash": "2478f7078709241af991d2cbf2d6360f"
     }
 }
