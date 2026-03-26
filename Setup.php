@@ -77,6 +77,6 @@ class Setup extends AbstractSetup
 
 	public function uninstallStep3(): void
 	{
-		$this->schemaManager()->dropTable('xf_sylphian_verify_categories');
+		$this->schemaManager()->dropTable('xf_sylphian_verify_server_categories');
 	}
 }
