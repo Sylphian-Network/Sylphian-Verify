@@ -15,20 +15,34 @@
 }
 </xf:css>
 
-<div class="block">
-    <div class="block-container">
-        <div class="block-body">
-            <xf:if is="$servers is not empty">
-                <xf:foreach loop="$servers" value="$server">
-                    <xf:macro name="server_display" 
-                        arg-server="{$server}" />
-                </xf:foreach>
-            <xf:else />
-                <div class="block-row">{{ phrase('sylphian_verify_no_servers_found') }}</div>
-            </xf:if>
-        </div>
-    </div>
-</div>
+<xf:if is="$serversGrouped is not empty">
+	<xf:if is="$serversGrouped.0 is not empty">
+		<xf:foreach loop="$serversGrouped.0" value="$server">
+			<div class="block block-container block-body">
+				<xf:macro name="server_display" arg-server="{$server}" />
+			</div>
+		</xf:foreach>
+	</xf:if>
+
+	<xf:foreach loop="$categories" value="$category">
+		<div class="block block-container block-body">
+			<xf:set var="$group" value="{$serversGrouped.{$category.category_id}}" />
+			<xf:if is="$group is not empty">
+				<h3 class="block-header">
+					{$category.title}
+					<xf:if is="$category.description is not empty">
+						<span class="block-desc">{$category.description|raw}</span>
+					</xf:if>
+				</h3>
+				<xf:foreach loop="$group" value="$server">
+					<xf:macro name="server_display" arg-server="{$server}" />
+				</xf:foreach>
+			</xf:if>
+		</div>
+	</xf:foreach>
+<xf:else />
+	<div class="block-row">{{ phrase('sylphian_verify_no_servers_found') }}</div>
+</xf:if>
 
 <xf:macro name="server_display" arg-server="!">
     <div class="block-row block-row--separated">

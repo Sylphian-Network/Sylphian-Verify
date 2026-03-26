@@ -18,6 +18,11 @@ use XF\Mvc\Entity\Structure;
  */
 class Category extends Entity
 {
+	public function getId()
+	{
+		return $this->category_id;
+	}
+
 	public static function getStructure(Structure $structure): Structure
 	{
 		$structure->table = 'xf_sylphian_verify_server_categories';
@@ -29,7 +34,9 @@ class Category extends Entity
 			'description' => ['type' => self::STR, 'default' => ''],
 			'display_order' => ['type' => self::UINT, 'default' => 1],
 		];
-		$structure->getters = [];
+		$structure->getters = [
+			'id' => true,
+		];
 		$structure->relations = [
 			'GameServers' => [
 				'entity' => 'Sylphian\Verify:GameServer',

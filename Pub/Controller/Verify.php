@@ -17,9 +17,11 @@ class Verify extends Controller
 		$categories = $categoryRepo->findCategoriesForList()->fetch();
 		$servers = $serverRepo->findServersForList()->fetch();
 
+		$serversGrouped = $servers->groupBy('category_id');
+
 		$viewParams = [
 			'categories' => $categories,
-			'servers' => $servers,
+			'serversGrouped' => $serversGrouped,
 		];
 
 		return $this->view('Sylphian\Verify:Verify', 'sylphian_verify_game_servers', $viewParams);

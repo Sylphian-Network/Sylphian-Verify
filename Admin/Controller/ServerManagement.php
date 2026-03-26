@@ -2,6 +2,7 @@
 
 namespace Sylphian\Verify\Admin\Controller;
 
+use Sylphian\Verify\Entity\Category;
 use Sylphian\Verify\Entity\GameServer;
 use Sylphian\Verify\Repository\CategoryRepository;
 use Sylphian\Verify\Repository\GameServerRepository;
@@ -33,7 +34,8 @@ class ServerManagement extends AbstractController
 
 		$viewParams = [
 			'categories' => $categories,
-			'servers' => $servers,
+			'serversGrouped' => $servers->groupBy('category_id'),
+			'totalServers' => $servers->count(),
 		];
 
 		return $this->view('Sylphian\Verify:ServerManagement\List', 'sylphian_verify_server_list', $viewParams);
@@ -58,12 +60,87 @@ class ServerManagement extends AbstractController
 		return $this->serverAddEdit($server);
 	}
 
+	public function actionCategoryAdd(): View
+	{
+		$category = $this->em()->create(Category::class);
+		return $this->categoryAddEdit($category);
+	}
+
+	public function actionCategoryEdit(ParameterBag $params): View
+	{
+		$id = $params->id ?: $this->filter('category_id', 'uint');
+		$category = $this->assertCategoryExists($id);
+		return $this->categoryAddEdit($category);
+	}
+
+	public function categoryAddEdit(Category $category): View
+	{
+		$viewParams = [
+			'category' => $category,
+		];
+
+		return $this->view('Sylphian\Verify:Category\Edit', 'sylphian_verify_category_edit', $viewParams);
+	}
+
+	public function actionCategorySave(ParameterBag $params): Redirect
+	{
+		$id = $params->id ?: $this->filter('category_id', 'uint');
+		if ($id)
+		{
+			$category = $this->assertCategoryExists($id);
+		}
+		else
+		{
+			$category = $this->em()->create(Category::class);
+		}
+
+		$this->categorySaveProcess($category)->run();
+
+		return $this->redirect($this->buildLink('sylphian-verify-manage-servers'));
+	}
+
+	protected function categorySaveProcess(Category $category): FormAction
+	{
+		$form = $this->formAction();
+
+		$input = $this->filter([
+			'title' => 'str',
+			'description' => 'str',
+			'display_order' => 'uint',
+		]);
+
+		$form->basicEntitySave($category, $input);
+
+		return $form;
+	}
+
+	public function actionCategoryDelete(ParameterBag $params): Redirect|View
+	{
+		$id = $params->id ?: $this->filter('category_id', 'uint');
+		$category = $this->assertCategoryExists($id);
+
+		if ($this->isPost())
+		{
+			$category->delete();
+
+			return $this->redirect($this->buildLink('sylphian-verify-manage-servers'));
+		}
+		else
+		{
+			$viewParams = [
+				'category' => $category,
+			];
+
+			return $this->view('Sylphian\Verify:Category\Delete', 'sylphian_verify_category_delete', $viewParams);
+		}
+	}
+
 	/**
 	 * @throws Exception
 	 */
 	public function actionEdit(ParameterBag $params): View
 	{
-		$server = $this->assertServerExists($params->server_id);
+		$server = $this->assertServerExists($params->id);
 		return $this->serverAddEdit($server);
 	}
 
@@ -73,9 +150,10 @@ class ServerManagement extends AbstractController
 	 */
 	public function actionSave(ParameterBag $params): Redirect
 	{
-		if ($params->server_id)
+		$id = $params->id ?: $this->filter('server_id', 'uint');
+		if ($id)
 		{
-			$server = $this->assertServerExists($params->server_id);
+			$server = $this->assertServerExists($params->id);
 		}
 		else
 		{
@@ -112,7 +190,7 @@ class ServerManagement extends AbstractController
 	 */
 	public function actionDelete(ParameterBag $params): Redirect|View
 	{
-		$server = $this->assertServerExists($params->server_id);
+		$server = $this->assertServerExists($params->id);
 
 		if ($this->isPost())
 		{
@@ -141,5 +219,10 @@ class ServerManagement extends AbstractController
 	protected function assertServerExists(int $id, array|string|null $with = null, ?string $phraseKey = null): GameServer
 	{
 		return $this->assertRecordExists(GameServer::class, $id, $with, $phraseKey);
+	}
+
+	protected function assertCategoryExists(int $id, array|string|null $with = null, ?string $phraseKey = null): Category
+	{
+		return $this->assertRecordExists(Category::class, $id, $with, $phraseKey);
 	}
 }

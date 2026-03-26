@@ -107,6 +107,12 @@
         "version_string": "1.0.0 Alpha",
         "hash": "1f78ae0500c549603a85262981982518"
     },
+    "sylphian_verify_add_category.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "3abd4b07c50c7ca7d319a77235f57c0d"
+    },
     "sylphian_verify_add_minecraft_account.txt": {
         "global_cache": false,
         "version_id": 1000010,
@@ -130,6 +136,12 @@
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "205bc73c4ab4286a1fb9d4c18322777c"
+    },
+    "sylphian_verify_edit_category.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "31b301a8c6227ac735de084114f6fc36"
     },
     "sylphian_verify_edit_server.txt": {
         "global_cache": false,
@@ -166,6 +178,12 @@
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "310c85970da6ecbf3a3b13ceef71bd34"
+    },
+    "sylphian_verify_ip_port.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "7ce92aa09851625718ac598a988d75c7"
     },
     "sylphian_verify_linked_account_options.txt": {
         "global_cache": false,

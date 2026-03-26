@@ -46,6 +46,11 @@ class GameServer extends Entity
 		return $this->_status;
 	}
 
+	public function getId()
+	{
+		return $this->server_id;
+	}
+
 	public function getMotd(): string
 	{
 		return (string) ($this->getCachedStatus()['motd'] ?? '');
@@ -108,6 +113,7 @@ class GameServer extends Entity
 			'display_order' => ['type' => self::UINT, 'default' => 1],
 		];
 		$structure->getters = [
+			'id' => true,
 			'motd' => true,
 			'players' => true,
 			'max_players' => true,
