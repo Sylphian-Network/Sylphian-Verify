@@ -3,6 +3,7 @@
 namespace Sylphian\Verify\Admin\Controller;
 
 use Sylphian\Verify\Entity\GameServer;
+use Sylphian\Verify\Repository\CategoryRepository;
 use Sylphian\Verify\Repository\GameServerRepository;
 use XF\Admin\Controller\AbstractController;
 use XF\Mvc\FormAction;
@@ -25,9 +26,13 @@ class ServerManagement extends AbstractController
 	public function actionIndex(): View
 	{
 		$serverRepo = $this->repository(GameServerRepository::class);
+		$categoryRepo = $this->repository(CategoryRepository::class);
+
+		$categories = $categoryRepo->findCategoriesForList()->fetch();
 		$servers = $serverRepo->findServersForList()->fetch();
 
 		$viewParams = [
+			'categories' => $categories,
 			'servers' => $servers,
 		];
 
@@ -36,8 +41,12 @@ class ServerManagement extends AbstractController
 
 	public function serverAddEdit(GameServer $server): View
 	{
+		$categoryRepo = $this->repository(CategoryRepository::class);
+		$categories = $categoryRepo->findCategoriesForList()->fetch();
+
 		$viewParams = [
 			'server' => $server,
+			'categories' => $categories,
 		];
 
 		return $this->view('Sylphian\Verify:ServerManagement\Edit', 'sylphian_verify_server_edit', $viewParams);
@@ -84,6 +93,8 @@ class ServerManagement extends AbstractController
 
 		$input = $this->filter([
 			'title' => 'str',
+			'category_id' => 'uint',
+			'display_order' => 'uint',
 			'game' => 'str',
 			'host' => 'str',
 			'port' => 'uint',

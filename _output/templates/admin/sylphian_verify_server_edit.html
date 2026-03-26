@@ -11,6 +11,18 @@
 						   label="{{ phrase('title') }}"
 						   required="true" />
 
+			<xf:selectrow name="category_id" value="{$server.category_id}"
+						  label="{{ phrase('sylphian_verify_category') }}">
+				<xf:option value="0">{{ phrase('none') }}</xf:option>
+				<xf:foreach loop="$categories" value="$category">
+					<xf:option value="{$category.category_id}">{$category.title}</xf:option>
+				</xf:foreach>
+			</xf:selectrow>
+
+			<xf:numberboxrow name="display_order" value="{$server.display_order}"
+							 label="{{ phrase('display_order') }}"
+							 min="0" step="1" />
+
 			<xf:selectrow name="game" value="{$server.game}"
 						  label="{{ phrase('sylphian_verify_game_type') }}">
 				<xf:option value="minecraft">{{ phrase('sylphian_verify_game_minecraft') }}</xf:option>
