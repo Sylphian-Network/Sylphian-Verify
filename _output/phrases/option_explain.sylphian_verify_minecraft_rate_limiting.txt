@@ -1,0 +1,1 @@
+A configuration option that controls how frequently the Minecraft provider can make API requests. Input the number of requests and the window in seconds.

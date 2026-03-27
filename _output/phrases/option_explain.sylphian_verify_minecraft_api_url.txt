@@ -1,0 +1,1 @@
+A configurable string that defines the endpoint used to fetch Minecraft server status. Use {ip} and {port} as placeholders.

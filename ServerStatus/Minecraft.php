@@ -7,11 +7,10 @@ use Sylphian\Verify\Entity\GameServer;
 
 class Minecraft extends AbstractProvider
 {
-	protected const string API_URL = 'https://api.mcstatus.io/v2/status/java/%s:%d';
-
 	protected function getRateLimit(): array
 	{
-		return [5, 1];
+		$rateLimit = \XF::options()->sylphian_verify_minecraft_rate_limiting;
+		return [$rateLimit['requests'] ?? 5, $rateLimit['window_in_seconds'] ?? 15];
 	}
 
 	protected function doFetchStatus(GameServer $server): array
@@ -19,10 +18,13 @@ class Minecraft extends AbstractProvider
 		$client = \XF::app()->http()->client();
 		$status = $this->getDefaultStatus();
 
+		$apiUrl = \XF::options()->sylphian_verify_minecraft_api_url;
+		$url = str_replace(['{ip}', '{port}'], [$server->host, $server->port], $apiUrl);
+
 		try
 		{
 			$response = $client->get(
-				sprintf(self::API_URL, $server->host, $server->port),
+				$url,
 				['timeout' => 5]
 			);
 

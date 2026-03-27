@@ -1,4 +1,9 @@
 {
+    "admin/option_template_sylphian_verify_rate_limiting.html": {
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "904bba1d5f2cffcf290b4fc7240691a9"
+    },
     "admin/sylphian_verify_category_delete.html": {
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
@@ -12,7 +17,7 @@
     "admin/sylphian_verify_option_macros.html": {
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": "369e8918c4694821f2ba435530b0720e"
+        "hash": "4ebafa269562b661f1abc2b7c17a4723"
     },
     "admin/sylphian_verify_server_delete.html": {
         "version_id": 1000010,
