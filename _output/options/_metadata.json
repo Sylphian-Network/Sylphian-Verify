@@ -8,6 +8,12 @@
     "sylphian_verify_minecraft_account_limit.json": {
         "hash": "3cb7a2f9c63602faad1ea7d7b5613baf"
     },
+    "sylphian_verify_minecraft_api_url.json": {
+        "hash": "4a510847790ee985ae569c4d5cfa23fb"
+    },
+    "sylphian_verify_minecraft_rate_limiting.json": {
+        "hash": "56cc342f9839ed9e98b91b5ecf321f31"
+    },
     "sylphian_verify_passcode_expiry.json": {
         "hash": "46f792ba4a8368793cc90451cc624866"
     }

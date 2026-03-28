@@ -2,6 +2,7 @@
 
 namespace Sylphian\Verify\ServerStatus;
 
+use Sylphian\Library\Logger\Logger;
 use Sylphian\Verify\Entity\GameServer;
 
 abstract class AbstractProvider
@@ -44,6 +45,13 @@ abstract class AbstractProvider
 			$oldest = min(self::$requestHistory[$class]);
 			$sleepUntil = $oldest + $window;
 			$sleepTime = ($sleepUntil - $now) * 1000000;
+
+			Logger::warning('Rate limit exceeded', [
+				'provider' => $class,
+				'requests_in_window' => count(self::$requestHistory[$class]),
+				'limit' => $limit,
+				'window' => $window,
+			]);
 
 			if ($sleepTime > 0)
 			{

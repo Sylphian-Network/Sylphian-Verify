@@ -1,0 +1,16 @@
+{
+    "edit_format": "template",
+    "edit_format_params": "template=option_template_sylphian_verify_rate_limiting",
+    "data_type": "array",
+    "sub_options": [
+        "requests",
+        "window_in_seconds"
+    ],
+    "validation_class": "",
+    "validation_method": "",
+    "advanced": false,
+    "default_value": "{\"requests\":5,\"window_in_seconds\":15}",
+    "relations": {
+        "sylphian_verify": 3020
+    }
+}

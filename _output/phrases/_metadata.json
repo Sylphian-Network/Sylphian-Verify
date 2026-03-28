@@ -47,6 +47,18 @@
         "version_string": "1.0.0 Alpha",
         "hash": "cc54fc36a0b5ed8a69d3887f03827655"
     },
+    "option.sylphian_verify_minecraft_api_url.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "32f06496d5260b68d24b124ed7b329ed"
+    },
+    "option.sylphian_verify_minecraft_rate_limiting.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "ba075f61cf9722a71433357b7703b072"
+    },
     "option.sylphian_verify_passcode_expiry.txt": {
         "global_cache": false,
         "version_id": 1000010,
@@ -70,6 +82,18 @@
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "67c36e47330b3b9b779871645bfe5195"
+    },
+    "option_explain.sylphian_verify_minecraft_api_url.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "9b737fefbcf46f63e8954a803161c20d"
+    },
+    "option_explain.sylphian_verify_minecraft_rate_limiting.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "494f8ffba27f94dcf03c2156d1386139"
     },
     "option_explain.sylphian_verify_passcode_expiry.txt": {
         "global_cache": false,
@@ -124,6 +148,12 @@
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "74c9e12c3a19cfb79b79faf579934844"
+    },
+    "sylphian_verify_api_options.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "fe52002cc24acd1e670047aeac5507f0"
     },
     "sylphian_verify_confirm_delete_server.txt": {
         "global_cache": false,

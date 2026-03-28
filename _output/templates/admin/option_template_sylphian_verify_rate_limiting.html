@@ -1,0 +1,7 @@
+<xf:formrow rowtype="input" label="{$option.title}" hint="{$hintHtml}" explain="{$option.explain}" html="{$listedHtml}" rowclass="{$rowClass}">
+	<div class="inputGroup">
+		<xf:textbox name="{$inputName}[requests]" value="{$option.option_value.requests}" placeholder="Requests" />
+		<span class="inputGroup-splitter"></span>
+		<xf:textbox name="{$inputName}[window_in_seconds]" value="{$option.option_value.window_in_seconds}" placeholder="Seconds" />
+	</div>
+</xf:formrow>
