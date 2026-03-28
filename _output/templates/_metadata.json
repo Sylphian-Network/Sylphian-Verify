@@ -37,12 +37,12 @@
     "public/sylphian_verify.less": {
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": "a515f40f50907a18075233cbfce097a0"
+        "hash": "44ec4962cdbef72af26dd869e60c40f0"
     },
     "public/sylphian_verify_account_minecraft.html": {
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": "63c1673e13888880cc7bafbacf3e56a2"
+        "hash": "fa4884c1809dacf8e851d0efc4f887e3"
     },
     "public/sylphian_verify_account_minecraft_delete.html": {
         "version_id": 1000010,
