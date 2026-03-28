@@ -1,0 +1,1 @@
+Base styling applied to the Minecraft account verification status icon (size, spacing, and cursor behaviour).

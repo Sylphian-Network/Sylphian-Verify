@@ -1,4 +1,13 @@
 {
+    "sylphian_verify_minecraft_account_status_confirmed.json": {
+        "hash": "43a182d9abc639149197e8629a3cbac7"
+    },
+    "sylphian_verify_minecraft_account_status_icon.json": {
+        "hash": "9ac4b2c134f05434a857ea8759b8333c"
+    },
+    "sylphian_verify_minecraft_account_status_unconfirm.json": {
+        "hash": "df5c3c4284d7ab14ce8f3cfec7ceea11"
+    },
     "sylphian_verify_minecraft_motd.json": {
         "hash": "3dee84e2ed0edf53e12de5bc32376771"
     }
