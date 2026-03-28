@@ -34,6 +34,11 @@
         "version_string": "1.0.0 Alpha",
         "hash": "fbc2f3e19d10513e4e3ede920ff64d1d"
     },
+    "public/sylphian_verify.less": {
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "a515f40f50907a18075233cbfce097a0"
+    },
     "public/sylphian_verify_account_minecraft.html": {
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
@@ -47,6 +52,6 @@
     "public/sylphian_verify_game_servers.html": {
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": "2478f7078709241af991d2cbf2d6360f"
+        "hash": "fd5eeec6279be8925795016fd6eb1bad"
     }
 }

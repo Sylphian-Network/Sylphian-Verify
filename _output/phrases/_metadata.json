@@ -113,6 +113,30 @@
         "version_string": "1.0.0 Alpha",
         "hash": "d41d8cd98f00b204e9800998ecf8427e"
     },
+    "style_prop.sylphian_verify_minecraft_motd.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "8b17e9751d928b1af94fef4b9fd7954f"
+    },
+    "style_prop_desc.sylphian_verify_minecraft_motd.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "style_prop_group.sylphian_verify.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "96c66f82d877f715f00ab15b8c714701"
+    },
+    "style_prop_group_desc.sylphian_verify.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "56e5184b237990dde4946ab4735d115b"
+    },
     "sylphian_verify_6_digit_code.txt": {
         "global_cache": false,
         "version_id": 1000010,
