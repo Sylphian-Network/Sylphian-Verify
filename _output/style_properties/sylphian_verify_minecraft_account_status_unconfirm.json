@@ -1,5 +1,5 @@
 {
-    "group_name": "sylphian_verify",
+    "group_name": "sylphian_verify_account_management",
     "title": "Status Icon Colour [Unconfirmed]",
     "description": "The colour used for the Minecraft account status icon when the account has not yet been verified.",
     "property_type": "value",

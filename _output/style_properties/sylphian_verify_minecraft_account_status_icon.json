@@ -1,7 +1,7 @@
 {
-    "group_name": "sylphian_verify",
-    "title": "Minecraft account status icon",
-    "description": "Base styling applied to the Minecraft account verification status icon (size, spacing, and cursor behaviour).",
+    "group_name": "sylphian_verify_account_management",
+    "title": "Verification Icon",
+    "description": "Base styling applied to the account verification status icon (size, spacing, and cursor behaviour).",
     "property_type": "css",
     "css_components": [
         "text",

@@ -1,5 +1,8 @@
 {
-    "sylphian_verify.json": {
-        "hash": "a5d1e01de85ffd62378661f6e730eb6b"
+    "sylphian_verify_account_management.json": {
+        "hash": "9c77b32e8c71b0da0ab55bb27c00d8b6"
+    },
+    "sylphian_verify_server_list.json": {
+        "hash": "bb9376dbd8d82c054a385e061decdb55"
     }
 }

@@ -1,6 +1,6 @@
 {
     "group_name": "sylphian_verify_account_management",
-    "title": "Account Metadata",
+    "title": "Account Username",
     "description": "",
     "property_type": "css",
     "css_components": [
@@ -13,9 +13,9 @@
     "depends_on": "",
     "value_group": "",
     "property_value": {
-        "font-size": "12px",
-        "color": "@xf-textColorMuted",
-        "extra": "margin-top: 2px"
+        "font-size": "16px",
+        "font-weight": "@xf-fontWeightHeavy",
+        "extra": "margin: 0;\ndisplay: flex;\nalign-items: center;"
     },
-    "display_order": 2
+    "display_order": 1
 }
