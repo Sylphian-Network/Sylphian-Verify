@@ -1,1 +1,0 @@
-Base styling applied to the account verification status icon (size, spacing, and cursor behaviour).
