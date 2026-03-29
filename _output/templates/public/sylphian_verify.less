@@ -15,14 +15,14 @@
 }
 
 .mc-avatar {
-	flex: 0 0 48px;
+	flex: 0 0 @xf-sylphian_mc_avatar_size;
 	margin-right: 15px;
 }
 
 .mc-avatar img {
 	display: block;
-	width: 48px;
-	height: 48px;
+	width: @xf-sylphian_mc_avatar_size;
+	height: @xf-sylphian_mc_avatar_size;
 	border-radius: 4px;
 }
 
@@ -52,9 +52,7 @@
 }
 
 .mc-meta {
-	font-size: 12px;
-	color: @xf-textColorMuted;
-	margin-top: 2px;
+	.xf-sylphian_verify_minecraft_account_meta();
 }
 
 .mc-verify-container {

@@ -1,6 +1,6 @@
 {
     "group_name": "sylphian_verify",
-    "title": "Colour [Confirmed]",
+    "title": "Status Icon Colour [Confirmed]",
     "description": "The colour used for the Minecraft account status icon when the account has been successfully verified.",
     "property_type": "value",
     "css_components": [],
@@ -8,7 +8,7 @@
     "value_parameters": "",
     "has_variations": false,
     "depends_on": "sylphian_verify_minecraft_account_status_icon",
-    "value_group": "MinecraftAccountStatusIcon",
+    "value_group": "MinecraftAccount",
     "property_value": "@xf-successColor",
-    "display_order": 1
+    "display_order": 11
 }

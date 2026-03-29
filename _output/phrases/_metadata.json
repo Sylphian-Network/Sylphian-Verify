@@ -113,6 +113,12 @@
         "version_string": "1.0.0 Alpha",
         "hash": "d41d8cd98f00b204e9800998ecf8427e"
     },
+    "style_prop.sylphian_mc_avatar_size.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "14000389dc0c773587f398d9c00096a5"
+    },
     "style_prop.sylphian_verify_minecraft_account_status_confirmed.txt": {
         "global_cache": false,
         "version_id": 1000010,
@@ -136,6 +142,12 @@
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "8b17e9751d928b1af94fef4b9fd7954f"
+    },
+    "style_prop_desc.sylphian_mc_avatar_size.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "d41d8cd98f00b204e9800998ecf8427e"
     },
     "style_prop_desc.sylphian_verify_minecraft_account_status_confirmed.txt": {
         "global_cache": false,
