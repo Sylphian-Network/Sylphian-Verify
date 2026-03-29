@@ -1,21 +1,21 @@
 {
-    "sylphian_mc_avatar_size.json": {
-        "hash": "a7c268c91c66cfee820e02aad0c30373"
-    },
-    "sylphian_verify_minecraft_account_meta.json": {
+    "sylphian_verify_account_meta.json": {
         "hash": "c4c87573fef959e6b1f7fa491e867805"
     },
-    "sylphian_verify_minecraft_account_status_confirmed.json": {
-        "hash": "ac8f9a4c210a84f839865fc4a19a4b96"
+    "sylphian_verify_account_status_confirmed.json": {
+        "hash": "bc099ba785f9f5c9f0b5b09c8f9fbd81"
     },
-    "sylphian_verify_minecraft_account_status_icon.json": {
+    "sylphian_verify_account_status_icon.json": {
         "hash": "78c390c48cc651bf199c3c3299e22b4c"
     },
-    "sylphian_verify_minecraft_account_status_unconfirm.json": {
-        "hash": "5009e6b69038ebc2df87752b2c9b7ebb"
+    "sylphian_verify_account_status_unconfirm.json": {
+        "hash": "9afba23abb43d95f638f556764a0f7e0"
     },
-    "sylphian_verify_minecraft_account_username.json": {
+    "sylphian_verify_account_username.json": {
         "hash": "3f2261b3a7682937db1dc1460ab04325"
+    },
+    "sylphian_verify_mc_avatar_size.json": {
+        "hash": "331c1f5bafb74fbfe9f635865650fd11"
     },
     "sylphian_verify_minecraft_motd.json": {
         "hash": "c70409e0c223d3e4028b79d1689df70a"

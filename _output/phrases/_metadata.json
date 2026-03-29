@@ -113,41 +113,41 @@
         "version_string": "1.0.0 Alpha",
         "hash": "d41d8cd98f00b204e9800998ecf8427e"
     },
-    "style_prop.sylphian_mc_avatar_size.txt": {
-        "global_cache": false,
-        "version_id": 1000010,
-        "version_string": "1.0.0 Alpha",
-        "hash": "14000389dc0c773587f398d9c00096a5"
-    },
-    "style_prop.sylphian_verify_minecraft_account_meta.txt": {
+    "style_prop.sylphian_verify_account_meta.txt": {
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "5c3d0d87c204d7571d14ecd1ce2b3cc6"
     },
-    "style_prop.sylphian_verify_minecraft_account_status_confirmed.txt": {
+    "style_prop.sylphian_verify_account_status_confirmed.txt": {
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": "e8c439f77f8c26309e393e91b12f2b74"
+        "hash": "e4124a9d8a949fe955f705ca055b3d03"
     },
-    "style_prop.sylphian_verify_minecraft_account_status_icon.txt": {
+    "style_prop.sylphian_verify_account_status_icon.txt": {
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "589d80a244fcf5213acba05f513cf6a8"
     },
-    "style_prop.sylphian_verify_minecraft_account_status_unconfirm.txt": {
+    "style_prop.sylphian_verify_account_status_unconfirm.txt": {
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": "eb155fab8751faf15069722956e233d9"
+        "hash": "dda9440c97ae73d422e2a1b615b793b2"
     },
-    "style_prop.sylphian_verify_minecraft_account_username.txt": {
+    "style_prop.sylphian_verify_account_username.txt": {
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "934497cf5a5fbd85c071f470936f2d8e"
+    },
+    "style_prop.sylphian_verify_mc_avatar_size.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "14000389dc0c773587f398d9c00096a5"
     },
     "style_prop.sylphian_verify_minecraft_motd.txt": {
         "global_cache": false,
@@ -155,31 +155,37 @@
         "version_string": "1.0.0 Alpha",
         "hash": "8b17e9751d928b1af94fef4b9fd7954f"
     },
-    "style_prop_desc.sylphian_mc_avatar_size.txt": {
+    "style_prop_desc.sylphian_verify_account_meta.txt": {
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "d41d8cd98f00b204e9800998ecf8427e"
     },
-    "style_prop_desc.sylphian_verify_minecraft_account_status_confirmed.txt": {
+    "style_prop_desc.sylphian_verify_account_status_confirmed.txt": {
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": "9b2e622fd8322fdf55ae5fe600c0ce3b"
+        "hash": "d68d646fedb0956458fe6d97b60b12c9"
     },
-    "style_prop_desc.sylphian_verify_minecraft_account_status_icon.txt": {
+    "style_prop_desc.sylphian_verify_account_status_icon.txt": {
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
         "hash": "49ebc7f889ee42fe4ca2ab9dbf941ed5"
     },
-    "style_prop_desc.sylphian_verify_minecraft_account_status_unconfirm.txt": {
+    "style_prop_desc.sylphian_verify_account_status_unconfirm.txt": {
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": "8367c454c10109b21650ea1791470ef4"
+        "hash": "8dd7f39b532687b5a9bb218b8bd10d11"
     },
-    "style_prop_desc.sylphian_verify_minecraft_account_username.txt": {
+    "style_prop_desc.sylphian_verify_account_username.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.0 Alpha",
+        "hash": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "style_prop_desc.sylphian_verify_mc_avatar_size.txt": {
         "global_cache": false,
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",

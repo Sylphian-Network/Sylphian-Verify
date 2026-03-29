@@ -1,1 +1,0 @@
-The colour used for the Minecraft account status icon when the account has not yet been verified.

@@ -37,12 +37,12 @@
     "public/sylphian_verify_account_management.less": {
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": "726bfb651e10aae50f2d1457b3db5340"
+        "hash": "a4060f3ad2d79c9dcd71626e6cb6a478"
     },
     "public/sylphian_verify_account_minecraft.html": {
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": "42b897d61a93bffd834be5d2b5d34be8"
+        "hash": "3e2faf594865204b7b409670161d7a0a"
     },
     "public/sylphian_verify_account_minecraft_delete.html": {
         "version_id": 1000010,
@@ -52,11 +52,11 @@
     "public/sylphian_verify_game_servers.html": {
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": "41c404e23620eb9123806f2ef213c35d"
+        "hash": "ed8607d3e32b4de313163ba66ca205ca"
     },
     "public/sylphian_verify_server_list.less": {
         "version_id": 1000010,
         "version_string": "1.0.0 Alpha",
-        "hash": "a515f40f50907a18075233cbfce097a0"
+        "hash": "7823c628115046e552b79c4ff6955714"
     }
 }

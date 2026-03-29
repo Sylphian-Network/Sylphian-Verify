@@ -29,22 +29,22 @@
 		<div class="block-body">
 			<xf:if is="$accounts is not empty">
 				<xf:foreach loop="$accounts" value="$account">
-					<div class="mc-accountList-item">
-						<div class="mc-avatar">
+					<div class="sylphian_verify_accountList-item">
+						<div class="sylphian_verify_mc-avatar">
 							<img src="https://mc-heads.net/avatar/{$account.provider_key}/48" alt="{$account.username}" />
 						</div>
 						
-						<div class="mc-details">
-							<h3 class="mc-username">
+						<div class="sylphian_verify_details">
+							<h3 class="sylphian_verify_username">
 								{$account.username}
 								<xf:if is="$account.confirmed">
-									<xf:fa icon="fa-badge-check" class="mc-status-icon mc-status-icon--confirmed" title="{{ phrase('sylphian_verify_confirmed') }}" data-xf-init="tooltip" />
+									<xf:fa icon="fa-badge-check" class="sylphian_verify_status-icon sylphian_verify_status-icon--confirmed" title="{{ phrase('sylphian_verify_confirmed') }}" data-xf-init="tooltip" />
 								<xf:else />
-									<xf:fa icon="fa-badge-check" class="mc-status-icon mc-status-icon--unconfirmed" title="{{ phrase('sylphian_verify_unconfirmed') }}" data-xf-init="tooltip" />
+									<xf:fa icon="fa-badge-check" class="sylphian_verify_status-icon sylphian_verify_status-icon--unconfirmed" title="{{ phrase('sylphian_verify_unconfirmed') }}" data-xf-init="tooltip" />
 								</xf:if>
 							</h3>
 							
-							<div class="mc-meta">
+							<div class="sylphian_verify_meta">
 								<ul class="listInline listInline--bullet">
 									<li>
 										<xf:fa icon="fa-id-badge" title="UUID" />
@@ -60,12 +60,12 @@
 							</div>
 
 							<xf:if is="!$account.confirmed">
-								<div class="mc-verify-container">
-									<div class="mc-verify-header">
+								<div class="sylphian_verify_verify-container">
+									<div class="sylphian_verify_verify-header">
 										<xf:fa icon="fa-shield-check" /> {{ phrase('sylphian_verify_verify_account') }}
 									</div>
-									<div class="mc-verify-row">
-										<div class="mc-verify-input-wrap">
+									<div class="sylphian_verify_verify-row">
+										<div class="sylphian_verify_verify-input-wrap">
 											<xf:form action="{{ link('account/minecraft-verify') }}" ajax="true">
 												<div class="inputGroup inputGroup--joined">
 													<xf:textbox name="passcode" placeholder="{{ phrase('sylphian_verify_6_digit_code') }}" size="10" required="true" maxlength="6" />
@@ -74,7 +74,7 @@
 												</div>
 											</xf:form>
 										</div>
-										<div class="mc-verify-explain">
+										<div class="sylphian_verify_verify-explain">
 											{{ phrase('sylphian_verify_verification_explain') }}
 										</div>
 									</div>
@@ -82,7 +82,7 @@
 							</xf:if>
 						</div>
 
-						<div class="mc-actions">
+						<div class="sylphian_verify_actions">
 							<xf:button href="{{ link('account/minecraft-delete', null, {'account_id': $account.account_id}) }}" 
 									   class="button--warn button--small" 
 									   overlay="true" 
