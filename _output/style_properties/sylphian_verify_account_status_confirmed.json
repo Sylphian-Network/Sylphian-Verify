@@ -1,0 +1,14 @@
+{
+    "group_name": "sylphian_verify_account_management",
+    "title": "Status Icon Colour [Confirmed]",
+    "description": "The colour used for the account status icon when the account has been successfully verified.",
+    "property_type": "value",
+    "css_components": [],
+    "value_type": "color",
+    "value_parameters": "",
+    "has_variations": false,
+    "depends_on": "",
+    "value_group": "Universal",
+    "property_value": "@xf-successColor",
+    "display_order": 1
+}

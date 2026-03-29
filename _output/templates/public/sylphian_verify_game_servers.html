@@ -1,19 +1,6 @@
 <xf:title>{{ phrase('sylphian_verify_our_servers') }}</xf:title>
 
-<xf:css>
-.motd-container {
-    font-family: "Courier New", Courier, monospace;
-    background: #1f1f1f;
-    border: 1px solid #2b2b2b;
-    border-radius: 6px;
-    padding: 8px 10px;
-    line-height: 1.3;
-    font-size: 13px;
-    color: #ddd;
-    white-space: pre-line;
-    overflow-wrap: anywhere;
-}
-</xf:css>
+<xf:css src="sylphian_verify_server_list.less" />
 
 <xf:if is="$serversGrouped is not empty">
 	<xf:if is="$serversGrouped.0 is not empty">
@@ -82,7 +69,7 @@
                     </ul>
                 </div>
                 <xf:if is="$server.motd">
-                    <div class="contentRow-snippet motd-container">{$server.motd|raw}</div>
+                    <div class="contentRow-snippet sylphian_verify_motd-container">{$server.motd|raw}</div>
                 </xf:if>
                 <div class="contentRow-extra">
                     <xf:if is="$server.last_updated">

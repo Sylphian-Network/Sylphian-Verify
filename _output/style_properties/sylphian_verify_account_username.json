@@ -1,0 +1,21 @@
+{
+    "group_name": "sylphian_verify_account_management",
+    "title": "Account Username",
+    "description": "",
+    "property_type": "css",
+    "css_components": [
+        "text",
+        "extra"
+    ],
+    "value_type": "",
+    "value_parameters": "",
+    "has_variations": false,
+    "depends_on": "",
+    "value_group": "",
+    "property_value": {
+        "font-size": "16px",
+        "font-weight": "@xf-fontWeightHeavy",
+        "extra": "margin: 0;\ndisplay: flex;\nalign-items: center;"
+    },
+    "display_order": 1
+}

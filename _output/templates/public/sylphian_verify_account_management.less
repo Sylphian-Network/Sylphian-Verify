@@ -1,0 +1,87 @@
+.sylphian_verify_accountList-item {
+	display: flex;
+	align-items: center;
+	padding: 15px;
+	border-bottom: 1px solid @xf-borderLight;
+}
+
+.sylphian_verify_accountList-item:last-child {
+	border-bottom: none;
+}
+
+.sylphian_verify_details {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.sylphian_verify_username {
+	.xf-sylphian_verify_account_username();
+}
+
+.sylphian_verify_status-icon {
+	.xf-sylphian_verify_account_status_icon();
+}
+
+.sylphian_verify_status-icon--confirmed {
+	color: @xf-sylphian_verify_account_status_confirmed;
+}
+
+.sylphian_verify_status-icon--unconfirmed {
+	color: @xf-sylphian_verify_account_status_unconfirm;
+}
+
+.sylphian_verify_meta {
+	.xf-sylphian_verify_account_meta();
+}
+
+.sylphian_verify_verify-container {
+	margin-top: 10px;
+	padding: 12px;
+	background: @xf-contentAltBg;
+	border-radius: @xf-borderRadiusMedium;
+	border-left: 3px solid @xf-errorColor;
+}
+
+.sylphian_verify_verify-header {
+	font-size: 13px;
+	font-weight: 700;
+	margin-bottom: 8px;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.sylphian_verify_verify-row {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.sylphian_verify_verify-input-wrap {
+	flex: 1 1 auto;
+}
+
+.sylphian_verify_verify-explain {
+	flex: 1 1 250px;
+	font-size: 11px;
+	color: @xf-textColorMuted;
+	line-height: 1.4;
+}
+
+.sylphian_verify_actions {
+	margin-left: 15px;
+}
+
+/* Minecraft Styling */
+.sylphian_verify_mc-avatar {
+	flex: 0 0 @xf-sylphian_verify_mc_avatar_size;
+	margin-right: 15px;
+}
+
+.sylphian_verify_mc-avatar img {
+	display: block;
+	width: @xf-sylphian_verify_mc_avatar_size;
+	height: @xf-sylphian_verify_mc_avatar_size;
+	border-radius: 4px;
+}

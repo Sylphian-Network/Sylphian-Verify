@@ -1,0 +1,23 @@
+{
+    "sylphian_verify_account_meta.json": {
+        "hash": "c4c87573fef959e6b1f7fa491e867805"
+    },
+    "sylphian_verify_account_status_confirmed.json": {
+        "hash": "bc099ba785f9f5c9f0b5b09c8f9fbd81"
+    },
+    "sylphian_verify_account_status_icon.json": {
+        "hash": "f7e97f2f925473d2eeafba10ff018af1"
+    },
+    "sylphian_verify_account_status_unconfirm.json": {
+        "hash": "9afba23abb43d95f638f556764a0f7e0"
+    },
+    "sylphian_verify_account_username.json": {
+        "hash": "3f2261b3a7682937db1dc1460ab04325"
+    },
+    "sylphian_verify_mc_avatar_size.json": {
+        "hash": "db514201398d5c8d27d2b7037558b556"
+    },
+    "sylphian_verify_minecraft_motd.json": {
+        "hash": "c70409e0c223d3e4028b79d1689df70a"
+    }
+}
