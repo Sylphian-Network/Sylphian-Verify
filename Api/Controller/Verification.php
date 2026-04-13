@@ -55,6 +55,7 @@ class Verification extends AbstractController
 			]);
 
 			return $envelopeRepo->apiEnvelopeSuccess([
+				'allowed' => true,
 				'id' => $account->account_id,
 				'forum_username' => $account->User->username,
 				'minecraft_username' => $account->username,
