@@ -57,6 +57,7 @@ class Verification extends AbstractController
 			return $envelopeRepo->apiEnvelopeSuccess([
 				'allowed' => true,
 				'id' => $account->account_id,
+				'forum_user_id' => $account->User->user_id,
 				'forum_username' => $account->User->username,
 				'minecraft_username' => $account->username,
 				'link_date' => $account->add_date,
@@ -74,6 +75,7 @@ class Verification extends AbstractController
 				'reason' => 'brute_force_blocked',
 				'block_expires' => $bruteForce['block_expires'],
 				'remaining_seconds' => $bruteForce['remaining_seconds'],
+				'forum_user_id' => $account->User->user_id,
 				'forum_username' => $account->User->username,
 				'minecraft_username' => $account->username,
 			], 'Too many failed attempts. Please try again later.');
@@ -90,6 +92,7 @@ class Verification extends AbstractController
 			'passcode_expires' => $passcodeDetails['expires'],
 			'passcode_remaining_seconds' => $passcodeDetails['remaining_seconds'],
 			'attempts_remaining' => $bruteForce['attempts_remaining'],
+			'forum_user_id' => $account->User->user_id,
 			'forum_username' => $account->User->username,
 			'minecraft_username' => $account->username,
 		], 'Account found but confirmation required');
