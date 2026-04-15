@@ -4,6 +4,7 @@ namespace Sylphian\Verify\Api\Controller;
 
 use Sylphian\Library\Logger\AddonLogger;
 use Sylphian\Library\Logger\Logger;
+use Sylphian\Verify\Entity\Account;
 use Sylphian\Verify\Repository\EnvelopeRepository;
 use Sylphian\Verify\Repository\VerificationRepository;
 use XF\Api\Controller\AbstractController;
@@ -23,38 +24,99 @@ class Verification extends AbstractController
 	public function actionGetMinecraft(): AbstractReply
 	{
 		$uuidRaw = $this->filter('uuid', 'str');
-		$repo = $this->getVerificationRepo();
+		$uuidsRaw = $this->filter('uuids', 'array-str');
+
 		$envelopeRepo = $this->getEnvelopeRepo();
 
-		if (!$uuidRaw)
+		if ($uuidRaw && $uuidsRaw)
 		{
-			$this->logger->warning("API Request failed: Missing UUID");
-			return $envelopeRepo->apiEnvelopeError('Please provide a UUID', ['uuid' => ['UUID is required']]);
+			return $envelopeRepo->apiEnvelopeError('Provide either uuid or uuids, not both');
 		}
 
-		$uuid = $repo->normaliseMinecraftUuid($uuidRaw);
-		if (!$uuid)
+		if (!$uuidRaw && !$uuidsRaw)
 		{
-			$this->logger->warning("API Request failed: Invalid UUID format ({uuid})", ['uuid' => $uuidRaw]);
-			return $envelopeRepo->apiEnvelopeError('Invalid UUID format', ['uuid' => ['Invalid UUID format']]);
+			return $envelopeRepo->apiEnvelopeError('Please provide a uuid or uuids array');
 		}
 
-		$account = $repo->getAccountByMinecraftUuid($uuid);
+		$inputs = $uuidRaw ? [$uuidRaw] : $uuidsRaw;
+		$repo = $this->getVerificationRepo();
 
-		if (!$account || !$account->User)
+		$results = [];
+		$validUuids = [];
+		$normToOrigs = [];
+
+		foreach ($inputs AS $orig)
 		{
-			$this->logger->info("API Request: UUID not found ({uuid})", ['uuid' => $uuid]);
-			return $envelopeRepo->apiEnvelopeError('UUID not linked to any forum account');
+			$norm = $repo->normaliseMinecraftUuid($orig);
+			if (!$norm)
+			{
+				$this->logger->warning("API Request: Invalid UUID format ({uuid})", ['uuid' => $orig]);
+				$results[$orig] = [
+					'allowed' => false,
+					'reason' => 'INVALID_UUID_FORMAT',
+				];
+				continue;
+			}
+			$validUuids[] = $norm;
+			$normToOrigs[$norm][] = $orig;
 		}
+
+		$uniqueValidUuids = array_unique($validUuids);
+		if ($uniqueValidUuids)
+		{
+			$accounts = $repo->getAccountsByMinecraftUuids($uniqueValidUuids);
+			$accountsByNorm = [];
+			foreach ($accounts AS $account)
+			{
+				$accountsByNorm[$account->provider_key] = $account;
+			}
+
+			foreach ($uniqueValidUuids AS $norm)
+			{
+				$account = $accountsByNorm[$norm] ?? null;
+
+				if (!$account || !$account->User)
+				{
+					$this->logger->info("API Request: UUID not found ({uuid})", ['uuid' => $norm]);
+					$res = [
+						'allowed' => false,
+						'reason' => 'UUID_NOT_LINKED',
+					];
+				}
+				else
+				{
+					$res = $this->getAccountResult($account);
+				}
+
+				foreach ($normToOrigs[$norm] AS $orig)
+				{
+					$results[$orig] = $res;
+				}
+			}
+		}
+
+		if ($uuidRaw)
+		{
+			return $envelopeRepo->apiEnvelopeSuccess($results[$uuidRaw] ?? [], 'User retrieved successfully');
+		}
+
+		return $envelopeRepo->apiEnvelopeSuccess([
+			'results' => $results,
+		], 'Users retrieved successfully');
+	}
+
+	protected function getAccountResult(Account $account): array
+	{
+		$repo = $this->getVerificationRepo();
 
 		if ($account->confirmed)
 		{
 			$this->logger->debug("API Request: User retrieved successfully ({uuid})", [
-				'uuid' => $uuid,
+				'uuid' => $account->provider_key,
 				'username' => $account->User->username,
 			]);
 
-			return $envelopeRepo->apiEnvelopeSuccess([
+			return [
 				'allowed' => true,
 				'id' => $account->account_id,
 				'forum_user_id' => $account->User->user_id,
@@ -62,32 +124,32 @@ class Verification extends AbstractController
 				'minecraft_username' => $account->username,
 				'link_date' => $account->add_date,
 				'confirmed_date' => $account->confirmed_date,
-			], 'User retrieved successfully');
+			];
 		}
 
 		$bruteForce = $repo->getBruteForceDetails($account);
 		if ($bruteForce['is_blocked'])
 		{
-			$this->logger->warning("API Request: Brute force blocked ({uuid})", ['uuid' => $uuid]);
+			$this->logger->warning("API Request: Brute force blocked ({uuid})", ['uuid' => $account->provider_key]);
 
-			return $envelopeRepo->apiEnvelopeSuccess([
+			return [
 				'allowed' => false,
-				'reason' => 'brute_force_blocked',
+				'reason' => 'BRUTE_FORCE_BLOCKED',
 				'block_expires' => $bruteForce['block_expires'],
 				'remaining_seconds' => $bruteForce['remaining_seconds'],
 				'forum_user_id' => $account->User->user_id,
 				'forum_username' => $account->User->username,
 				'minecraft_username' => $account->username,
-			], 'Too many failed attempts. Please try again later.');
+			];
 		}
 
 		$passcodeDetails = $repo->getPasscodeDetails($account);
 
-		$this->logger->info("API Request: Unconfirmed account found ({uuid})", ['uuid' => $uuid]);
+		$this->logger->info("API Request: Unconfirmed account found ({uuid})", ['uuid' => $account->provider_key]);
 
-		return $envelopeRepo->apiEnvelopeSuccess([
+		return [
 			'allowed' => false,
-			'reason' => 'Account not confirmed',
+			'reason' => 'ACCOUNT_NOT_CONFIRMED',
 			'passcode' => $passcodeDetails['passcode'],
 			'passcode_expires' => $passcodeDetails['expires'],
 			'passcode_remaining_seconds' => $passcodeDetails['remaining_seconds'],
@@ -95,7 +157,7 @@ class Verification extends AbstractController
 			'forum_user_id' => $account->User->user_id,
 			'forum_username' => $account->User->username,
 			'minecraft_username' => $account->username,
-		], 'Account found but confirmation required');
+		];
 	}
 
 	/**

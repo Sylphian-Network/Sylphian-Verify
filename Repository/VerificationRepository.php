@@ -3,6 +3,7 @@
 namespace Sylphian\Verify\Repository;
 
 use Sylphian\Verify\Entity\Account;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Repository;
 
 class VerificationRepository extends Repository
@@ -21,6 +22,19 @@ class VerificationRepository extends Repository
 			->fetchOne();
 
 		return $account;
+	}
+
+	/**
+	 * @param array $uuids
+	 * @return AbstractCollection
+	 */
+	public function getAccountsByMinecraftUuids(array $uuids): AbstractCollection
+	{
+		return $this->finder('Sylphian\Verify:Account')
+			->where('provider', 'minecraft')
+			->where('provider_key', $uuids)
+			->with('User', true)
+			->fetch();
 	}
 
 	/**
