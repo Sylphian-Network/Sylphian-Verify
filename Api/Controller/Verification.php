@@ -23,26 +23,46 @@ class Verification extends AbstractController
 
 	public function actionGetMinecraft(): AbstractReply
 	{
-		$uuidRaw = $this->filter('uuid', 'str');
+		$uuidRaw  = $this->filter('uuid', 'str');
 		$uuidsRaw = $this->filter('uuids', 'array-str');
 
 		$envelopeRepo = $this->getEnvelopeRepo();
 
+		$error = $this->validateUuidInputs($uuidRaw, $uuidsRaw);
+		if ($error)
+		{
+			return $envelopeRepo->apiEnvelopeError($error);
+		}
+
+		$inputs  = $uuidRaw ? [$uuidRaw] : $uuidsRaw;
+		$results = $this->buildResultsFromInputs($inputs);
+
+		$data    = $uuidRaw ? ($results[$uuidRaw] ?? null) : $results;
+		$message = $uuidRaw ? 'User retrieved successfully' : 'Users retrieved successfully';
+
+		return $envelopeRepo->apiEnvelopeSuccess($data, $message);
+	}
+
+	protected function validateUuidInputs(string $uuidRaw, array $uuidsRaw): ?string
+	{
 		if ($uuidRaw && $uuidsRaw)
 		{
-			return $envelopeRepo->apiEnvelopeError('Provide either uuid or uuids, not both');
+			return 'Provide either uuid or uuids, not both';
 		}
 
 		if (!$uuidRaw && !$uuidsRaw)
 		{
-			return $envelopeRepo->apiEnvelopeError('Please provide a uuid or uuids array');
+			return 'Please provide a uuid or uuids array';
 		}
 
-		$inputs = $uuidRaw ? [$uuidRaw] : $uuidsRaw;
-		$repo = $this->getVerificationRepo();
+		return null;
+	}
 
-		$results = [];
-		$validUuids = [];
+	protected function buildResultsFromInputs(array $inputs): array
+	{
+		$repo        = $this->getVerificationRepo();
+		$results     = [];
+		$validUuids  = [];
 		$normToOrigs = [];
 
 		foreach ($inputs AS $orig)
@@ -53,56 +73,58 @@ class Verification extends AbstractController
 				$this->logger->warning("API Request: Invalid UUID format ({uuid})", ['uuid' => $orig]);
 				$results[$orig] = [
 					'allowed' => false,
-					'reason' => 'INVALID_UUID_FORMAT',
+					'reason'  => 'INVALID_UUID_FORMAT',
 				];
 				continue;
 			}
-			$validUuids[] = $norm;
+			$validUuids[]       = $norm;
 			$normToOrigs[$norm][] = $orig;
 		}
 
 		$uniqueValidUuids = array_unique($validUuids);
 		if ($uniqueValidUuids)
 		{
-			$accounts = $repo->getAccountsByMinecraftUuids($uniqueValidUuids);
-			$accountsByNorm = [];
-			foreach ($accounts AS $account)
-			{
-				$accountsByNorm[$account->provider_key] = $account;
-			}
-
-			foreach ($uniqueValidUuids AS $norm)
-			{
-				$account = $accountsByNorm[$norm] ?? null;
-
-				if (!$account || !$account->User)
-				{
-					$this->logger->info("API Request: UUID not found ({uuid})", ['uuid' => $norm]);
-					$res = [
-						'allowed' => false,
-						'reason' => 'UUID_NOT_LINKED',
-					];
-				}
-				else
-				{
-					$res = $this->getAccountResult($account);
-				}
-
-				foreach ($normToOrigs[$norm] AS $orig)
-				{
-					$results[$orig] = $res;
-				}
-			}
+			$results = $this->resolveAccountResults($uniqueValidUuids, $normToOrigs, $results);
 		}
 
-		if ($uuidRaw)
+		return $results;
+	}
+
+	protected function resolveAccountResults(array $uniqueValidUuids, array $normToOrigs, array $results): array
+	{
+		$repo     = $this->getVerificationRepo();
+		$accounts = $repo->getAccountsByMinecraftUuids($uniqueValidUuids);
+
+		$accountsByNorm = [];
+		foreach ($accounts AS $account)
 		{
-			return $envelopeRepo->apiEnvelopeSuccess($results[$uuidRaw] ?? [], 'User retrieved successfully');
+			$accountsByNorm[$account->provider_key] = $account;
 		}
 
-		return $envelopeRepo->apiEnvelopeSuccess([
-			'results' => $results,
-		], 'Users retrieved successfully');
+		foreach ($uniqueValidUuids AS $norm)
+		{
+			$account = $accountsByNorm[$norm] ?? null;
+
+			if (!$account || !$account->User)
+			{
+				$this->logger->info("API Request: UUID not found ({uuid})", ['uuid' => $norm]);
+				$res = [
+					'allowed' => false,
+					'reason'  => 'UUID_NOT_LINKED',
+				];
+			}
+			else
+			{
+				$res = $this->getAccountResult($account);
+			}
+
+			foreach ($normToOrigs[$norm] AS $orig)
+			{
+				$results[$orig] = $res;
+			}
+		}
+
+		return $results;
 	}
 
 	protected function getAccountResult(Account $account): array
@@ -136,7 +158,6 @@ class Verification extends AbstractController
 				'allowed' => false,
 				'reason' => 'BRUTE_FORCE_BLOCKED',
 				'block_expires' => $bruteForce['block_expires'],
-				'remaining_seconds' => $bruteForce['remaining_seconds'],
 				'forum_user_id' => $account->User->user_id,
 				'forum_username' => $account->User->username,
 				'minecraft_username' => $account->username,
@@ -152,25 +173,15 @@ class Verification extends AbstractController
 			'reason' => 'ACCOUNT_NOT_CONFIRMED',
 			'passcode' => $passcodeDetails['passcode'],
 			'passcode_expires' => $passcodeDetails['expires'],
-			'passcode_remaining_seconds' => $passcodeDetails['remaining_seconds'],
 			'attempts_remaining' => $bruteForce['attempts_remaining'],
-			'forum_user_id' => $account->User->user_id,
-			'forum_username' => $account->User->username,
-			'minecraft_username' => $account->username,
 		];
 	}
 
-	/**
-	 * @return VerificationRepository
-	 */
 	protected function getVerificationRepo(): VerificationRepository
 	{
 		return $this->repository(VerificationRepository::class);
 	}
 
-	/**
-	 * @return EnvelopeRepository
-	 */
 	protected function getEnvelopeRepo(): EnvelopeRepository
 	{
 		return $this->repository(EnvelopeRepository::class);
