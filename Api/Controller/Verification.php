@@ -35,7 +35,13 @@ class Verification extends AbstractController
 		}
 
 		$inputs  = $uuidRaw ? [$uuidRaw] : $uuidsRaw;
-		$results = $this->buildResultsFromInputs($inputs);
+		[$results, $logContext] = $this->buildResultsFromInputs($inputs);
+
+		$this->logger->info("API Request: Minecraft Verification Completed", [
+			'type' => $uuidRaw ? 'single' : 'batch',
+			'count' => count($inputs),
+			'results_summary' => $logContext,
+		]);
 
 		$data    = $uuidRaw ? ($results[$uuidRaw] ?? null) : $results;
 		$message = $uuidRaw ? 'User retrieved successfully' : 'Users retrieved successfully';
@@ -64,33 +70,34 @@ class Verification extends AbstractController
 		$results     = [];
 		$validUuids  = [];
 		$normToOrigs = [];
+		$logContext  = [];
 
 		foreach ($inputs AS $orig)
 		{
 			$norm = $repo->normaliseMinecraftUuid($orig);
 			if (!$norm)
 			{
-				$this->logger->warning("API Request: Invalid UUID format ({uuid})", ['uuid' => $orig]);
-				$results[$orig] = [
+				$logContext[$orig] = 'INVALID_FORMAT';
+				$results[$orig]    = [
 					'allowed' => false,
 					'reason'  => 'INVALID_UUID_FORMAT',
 				];
 				continue;
 			}
-			$validUuids[]       = $norm;
+			$validUuids[]         = $norm;
 			$normToOrigs[$norm][] = $orig;
 		}
 
 		$uniqueValidUuids = array_unique($validUuids);
 		if ($uniqueValidUuids)
 		{
-			$results = $this->resolveAccountResults($uniqueValidUuids, $normToOrigs, $results);
+			[$results, $logContext] = $this->resolveAccountResults($uniqueValidUuids, $normToOrigs, $results, $logContext);
 		}
 
-		return $results;
+		return [$results, $logContext];
 	}
 
-	protected function resolveAccountResults(array $uniqueValidUuids, array $normToOrigs, array $results): array
+	protected function resolveAccountResults(array $uniqueValidUuids, array $normToOrigs, array $results, array $logContext): array
 	{
 		$repo     = $this->getVerificationRepo();
 		$accounts = $repo->getAccountsByMinecraftUuids($uniqueValidUuids);
@@ -107,24 +114,25 @@ class Verification extends AbstractController
 
 			if (!$account || !$account->User)
 			{
-				$this->logger->info("API Request: UUID not found ({uuid})", ['uuid' => $norm]);
-				$res = [
+				$res       = [
 					'allowed' => false,
 					'reason'  => 'UUID_NOT_LINKED',
 				];
+				$logStatus = 'NOT_FOUND';
 			}
 			else
 			{
-				$res = $this->getAccountResult($account);
+				[$res, $logStatus] = $this->getAccountResult($account);
 			}
 
 			foreach ($normToOrigs[$norm] AS $orig)
 			{
-				$results[$orig] = $res;
+				$results[$orig]    = $res;
+				$logContext[$orig] = $logStatus;
 			}
 		}
 
-		return $results;
+		return [$results, $logContext];
 	}
 
 	protected function getAccountResult(Account $account): array
@@ -133,47 +141,47 @@ class Verification extends AbstractController
 
 		if ($account->confirmed)
 		{
-			$this->logger->debug("API Request: User retrieved successfully ({uuid})", [
-				'uuid' => $account->provider_key,
-				'username' => $account->User->username,
-			]);
-
 			return [
-				'allowed' => true,
-				'id' => $account->account_id,
-				'forum_user_id' => $account->User->user_id,
-				'forum_username' => $account->User->username,
-				'minecraft_username' => $account->username,
-				'link_date' => $account->add_date,
-				'confirmed_date' => $account->confirmed_date,
+				[
+					'allowed'            => true,
+					'id'                 => $account->account_id,
+					'forum_user_id'      => $account->User->user_id,
+					'forum_username'     => $account->User->username,
+					'minecraft_username' => $account->username,
+					'link_date'          => $account->add_date,
+					'confirmed_date'     => $account->confirmed_date,
+				],
+				'SUCCESS',
 			];
 		}
 
 		$bruteForce = $repo->getBruteForceDetails($account);
 		if ($bruteForce['is_blocked'])
 		{
-			$this->logger->warning("API Request: Brute force blocked ({uuid})", ['uuid' => $account->provider_key]);
-
 			return [
-				'allowed' => false,
-				'reason' => 'BRUTE_FORCE_BLOCKED',
-				'block_expires' => $bruteForce['block_expires'],
-				'forum_user_id' => $account->User->user_id,
-				'forum_username' => $account->User->username,
-				'minecraft_username' => $account->username,
+				[
+					'allowed'            => false,
+					'reason'             => 'BRUTE_FORCE_BLOCKED',
+					'block_expires'      => $bruteForce['block_expires'],
+					'forum_user_id'      => $account->User->user_id,
+					'forum_username'     => $account->User->username,
+					'minecraft_username' => $account->username,
+				],
+				'BRUTE_FORCE_BLOCKED',
 			];
 		}
 
 		$passcodeDetails = $repo->getPasscodeDetails($account);
 
-		$this->logger->info("API Request: Unconfirmed account found ({uuid})", ['uuid' => $account->provider_key]);
-
 		return [
-			'allowed' => false,
-			'reason' => 'ACCOUNT_NOT_CONFIRMED',
-			'passcode' => $passcodeDetails['passcode'],
-			'passcode_expires' => $passcodeDetails['expires'],
-			'attempts_remaining' => $bruteForce['attempts_remaining'],
+			[
+				'allowed'            => false,
+				'reason'             => 'ACCOUNT_NOT_CONFIRMED',
+				'passcode'           => $passcodeDetails['passcode'],
+				'passcode_expires'   => $passcodeDetails['expires'],
+				'attempts_remaining' => $bruteForce['attempts_remaining'],
+			],
+			'UNCONFIRMED',
 		];
 	}
 
