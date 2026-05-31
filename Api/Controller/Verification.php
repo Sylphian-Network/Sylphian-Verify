@@ -23,10 +23,19 @@ class Verification extends AbstractController
 
 	public function actionGetMinecraft(): AbstractReply
 	{
+		$envelopeRepo = $this->getEnvelopeRepo();
+
+		$input = $this->request->getInput();
+		if (!array_key_exists('uuid', $input) && !array_key_exists('uuids', $input))
+		{
+			return $envelopeRepo->apiEnvelopeSuccess([
+				'status'  => 'ok',
+				'time'    => \XF::$time,
+			], 'Minecraft Verification API is online');
+		}
+
 		$uuidRaw  = $this->filter('uuid', 'str');
 		$uuidsRaw = $this->filter('uuids', 'array-str');
-
-		$envelopeRepo = $this->getEnvelopeRepo();
 
 		$error = $this->validateUuidInputs($uuidRaw, $uuidsRaw);
 		if ($error)
